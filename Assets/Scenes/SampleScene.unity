@@ -269,7 +269,6 @@ GameObject:
   m_Component:
   - component: {fileID: 187940894}
   - component: {fileID: 187940897}
-  - component: {fileID: 187940896}
   - component: {fileID: 187940895}
   m_Layer: 6
   m_Name: WeaponCam
@@ -337,14 +336,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &187940896
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187940893}
-  m_Enabled: 1
 --- !u!20 &187940897
 Camera:
   m_ObjectHideFlags: 0
@@ -1105,10 +1096,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d729feaff3a684ea22750d2aa6aa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefabs:
+  baseWeaponsPrefabs:
   - {fileID: 9102446647387593414, guid: 9eb093a4fb751514f89747dcce8795f4, type: 3}
+  - {fileID: 9102446647387593414, guid: df44c2099e61d5741a3d51931bbeab75, type: 3}
   handTransform: {fileID: 653601878}
   selectedWeaponIndex: 0
+  input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
 --- !u!1 &1899095622
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,29 +7,62 @@ public class Gun : Weapon
 {
     public Transform firePoint;   // Punto de disparo del arma
     public GameObject bulletPrefab; // Prefab de la bala
+    bool isShooting = false;
+    [SerializeField] private InputManagerSO input;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (isAutomatic)
+        if(isAutomatic)
         {
-            if (Input.GetButton("Fire1")) // Mantener presionado el botón
-            {
-                Shoot();
-            }
+            input.OnShootStarted += ShootAuto;
+            input.OnShootCanceled += ShootAutoCancel;
         }
         else
         {
-            if (Input.GetButtonDown("Fire1")) // Disparar una sola vez al presionar
+            input.OnShootStarted += Shoot;
+        }
+        
+        input.OnReloadStarted += StartReload;
+    }
+
+    private void OnDisable()
+    {
+        if (isAutomatic)
+        {
+            input.OnShootStarted -= ShootAuto;
+            input.OnShootCanceled -= ShootAutoCancel;
+        }
+        else
+        {
+            input.OnShootStarted -= Shoot;
+        }
+        input.OnReloadStarted -= StartReload;
+    }
+
+    
+
+    private void Update()
+    {
+        if(isAutomatic)
+        {
+            if (isShooting)
             {
+
                 Shoot();
             }
         }
+    }
 
-        // Recargar
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartReload();
-        }
+    private void ShootAuto()
+    {
+        
+        isShooting = true;
+    }
+
+    private void ShootAutoCancel()
+    {
+        
+        isShooting = false;
     }
 
     public override void Shoot()

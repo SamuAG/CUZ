@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 9178487666765836264}
   - component: {fileID: 6065144029278987811}
   m_Layer: 7
-  m_Name: TestGun
+  m_Name: TestGun 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 531d299d2302f0c46b6daee3b42e97a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   currentAmmo: 2147483647
   fireRate: 100
   reloadTime: 0
-  isAutomatic: 1
+  isAutomatic: 0
   firePoint: {fileID: 8637403649868675197}
   bulletPrefab: {fileID: 2634007859309474445, guid: ce338a4b51916c24395ce11a6a3378fa,
     type: 3}

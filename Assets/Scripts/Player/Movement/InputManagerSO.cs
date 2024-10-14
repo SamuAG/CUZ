@@ -18,6 +18,10 @@ public class InputManagerSO : ScriptableObject
     public event Action OnCameraCanceled;
     public event Action OnSprintStarted;
     public event Action OnSprintCanceled;
+    public event Action OnShootStarted;
+    public event Action OnShootCanceled;
+    public event Action OnReloadStarted;
+    public event Action OnChangeWeaponStarted;
 
     private void OnEnable()
     {
@@ -32,6 +36,10 @@ public class InputManagerSO : ScriptableObject
         inputs.Gameplay.Camera.canceled += CameraCanceled;
         inputs.Gameplay.Sprint.started += SprintStarted;
         inputs.Gameplay.Sprint.canceled += SprintCanceled;
+        inputs.Gameplay.Shoot.started += ShootStarted;
+        inputs.Gameplay.Shoot.canceled += ShootCanceled;
+        inputs.Gameplay.Reload.started += ReloadStarted;
+        inputs.Gameplay.ChangeWeapon.started += ChangeWeaponStarted;
     }
 
     private void MovementStarted(InputAction.CallbackContext context)
@@ -60,7 +68,6 @@ public class InputManagerSO : ScriptableObject
 
     private void CameraPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log(context);
         OnCameraPerformed?.Invoke(context.ReadValue<Vector2>());
     }
 
@@ -77,5 +84,25 @@ public class InputManagerSO : ScriptableObject
     private void SprintCanceled(InputAction.CallbackContext context)
     {
         OnSprintCanceled?.Invoke();
+    }
+
+    private void ShootStarted(InputAction.CallbackContext context)
+    {
+        OnShootStarted?.Invoke();
+    }
+
+    private void ShootCanceled(InputAction.CallbackContext context)
+    {
+        OnShootCanceled?.Invoke();
+    }
+
+    private void ReloadStarted(InputAction.CallbackContext context)
+    {
+        OnReloadStarted?.Invoke();
+    }
+
+    private void ChangeWeaponStarted(InputAction.CallbackContext context)
+    {
+        OnChangeWeaponStarted?.Invoke();
     }
 }

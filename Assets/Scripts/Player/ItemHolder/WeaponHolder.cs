@@ -1,54 +1,113 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHolder : MonoBehaviour
 {
-    public List<GameObject> weaponPrefabs;  // Prefabs de las armas
+    public List<GameObject> baseWeaponsPrefabs;  // Prefabs de las armas
     public Transform handTransform;         // Transform de la mano donde se spawnearán las armas
     public int selectedWeaponIndex = 0;
+    [SerializeField] private InputManagerSO input;
 
-    private GameObject currentWeapon;       // Referencia al arma equipada
+    private List<GameObject> currentWeapons = new List<GameObject>();  // Armas equipadas
+
+    private void OnEnable()
+    {
+        input.OnChangeWeaponStarted += ChangeWeapon;
+    }
+
+    private void OnDisable()
+    {
+        input.OnChangeWeaponStarted -= ChangeWeapon;
+    }
 
     private void Start()
     {
+        // Inicializa las armas (activando solo la seleccionada)
+        InitializeWeapons();
         EquipWeapon(selectedWeaponIndex);
+        
     }
 
-    private void Update()
+    private void InitializeWeapons()
     {
-        // Cambiar de arma con la rueda del ratón
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        // Instanciar todas las armas desde la lista de prefabs, pero desactivarlas inicialmente
+        for (int i = 0; i < baseWeaponsPrefabs.Count; i++)
         {
-            selectedWeaponIndex = (selectedWeaponIndex + 1) % weaponPrefabs.Count;
-            EquipWeapon(selectedWeaponIndex);
+            GameObject newWeapon = Instantiate(baseWeaponsPrefabs[i], handTransform.position, handTransform.rotation, handTransform);
+            newWeapon.SetActive(false);  // Desactivar inicialmente todas las armas
+            currentWeapons.Add(newWeapon);
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        
+        if(currentWeapons.Count >= 0)
         {
-            selectedWeaponIndex--;
-            if (selectedWeaponIndex < 0)
-            {
-                selectedWeaponIndex = weaponPrefabs.Count - 1;
-            }
-            EquipWeapon(selectedWeaponIndex);
+            EquipWeapon(0);
         }
+    }
+
+    private void ChangeWeapon()
+    {
+        selectedWeaponIndex = (selectedWeaponIndex + 1) % currentWeapons.Count;
+        EquipWeapon(selectedWeaponIndex);
     }
 
     void EquipWeapon(int index)
     {
-        // Si ya hay un arma equipada, destruirla
-        if (currentWeapon != null)
+        // Desactivar todas las armas
+        for (int i = 0; i < currentWeapons.Count; i++)
         {
-            Destroy(currentWeapon);
+            currentWeapons[i].SetActive(false);
         }
 
-        // Instanciar el nuevo arma en la posición de la mano
-        currentWeapon = Instantiate(weaponPrefabs[index], handTransform.position, handTransform.rotation, handTransform);
+        // Activar la nueva arma seleccionada
+        if (currentWeapons[index] != null)
+        {
+            currentWeapons[index].SetActive(true);
+            Debug.Log($"Arma equipada: {currentWeapons[index].name}");
+        }
+        else
+        {
+            Debug.LogError("No se encontró el arma seleccionada.");
+        }
+    }
 
-        // Ajustar la posición y rotación para que coincida con la mano (si es necesario)
-        currentWeapon.transform.localPosition = Vector3.zero;  // Ajustar si es necesario
-        currentWeapon.transform.localRotation = Quaternion.identity;
+    public void AddWeapon(GameObject weaponPrefab)
+    {
+        // Instanciar el arma y annadirla a la lista de armas
+        GameObject newWeapon = Instantiate(weaponPrefab, handTransform.position, handTransform.rotation, handTransform);
+        currentWeapons[selectedWeaponIndex].SetActive(false);  
+        newWeapon.SetActive(true);  
+        currentWeapons.Add(newWeapon);
+    }
 
-        Debug.Log($"Arma equipada: {currentWeapon.name}");
+    public void RemoveCurrentWeapon()
+    {
+        // Eliminar el arma actual y equipar la siguiente
+        if (currentWeapons.Count > 1)
+        {
+            Destroy(currentWeapons[selectedWeaponIndex]);
+            currentWeapons.RemoveAt(selectedWeaponIndex);
+            selectedWeaponIndex = (selectedWeaponIndex + 1) % currentWeapons.Count;
+            EquipWeapon(selectedWeaponIndex);
+        }
+    }
+
+    public void ExchangeWeapon(GameObject weaponPrefab)
+    {
+        // 1. Eliminar el arma actual
+        if (currentWeapons.Count > 0)
+        {
+            Destroy(currentWeapons[selectedWeaponIndex]);
+            currentWeapons.RemoveAt(selectedWeaponIndex);
+        }
+
+        // 2. Añadir la nueva arma
+        GameObject newWeapon = Instantiate(weaponPrefab, handTransform.position, handTransform.rotation, handTransform);
+        newWeapon.SetActive(true); // Activar el arma recién intercambiada
+        currentWeapons.Insert(selectedWeaponIndex, newWeapon);  // Añadir en el mismo índice donde estaba la anterior
+
+        // 3. Equipar la nueva arma
+        EquipWeapon(selectedWeaponIndex);
     }
 }
