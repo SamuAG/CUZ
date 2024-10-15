@@ -12,6 +12,8 @@ public class WeaponHolder : MonoBehaviour
 
     private List<GameObject> currentWeapons = new List<GameObject>();  // Armas equipadas
 
+    public List<GameObject> CurrentWeapons { get => currentWeapons; }
+
     private void OnEnable()
     {
         input.OnChangeWeaponStarted += ChangeWeapon;
