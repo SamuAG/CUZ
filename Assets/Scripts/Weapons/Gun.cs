@@ -71,7 +71,10 @@ public class Gun : Weapon
 
         // Disparar una bala
         Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation).GetComponent<Bullet>();
+
+        bullet.speed = bulletSpeed;
+        bullet.damage = damage;
 
         // Reducir munición
         ReduceAmmo();

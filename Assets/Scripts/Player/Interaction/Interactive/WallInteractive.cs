@@ -6,18 +6,34 @@ public class WallInteractive : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject gunPrefab;
     [SerializeField] GameManagerSO gM;
+    [SerializeField] int price;
+
+    // TODO: implementar cobrar al jugador cuando interactúe con el objeto
 
     public void interact()
     {
-        // TODO: esto se podria deshardcodear un poco o se pueden tener armas repetidas o que te compre municion si ya la tienes
-        // eso se podria comprobar xq la clase Weapon tiene un campo llamado name
-        if (gM.Player.GetComponent<WeaponHolder>().CurrentWeapons.Count < 2)
+        WeaponHolder weaponHolder = gM.Player.GetComponent<WeaponHolder>();
+        string weaponName = gunPrefab.GetComponent<Weapon>().WeaponData.weaponName;
+
+        // Verifica si el jugador ya tiene el arma
+        bool alreadyHasWeapon = weaponHolder.HasWeapon(weaponName);
+
+        if (!alreadyHasWeapon && weaponHolder.CurrentWeapons.Count < 2)
         {
-            gM.Player.GetComponent<WeaponHolder>().AddWeapon(gunPrefab);
+            // Si no tiene el arma y hay espacio, añadirla
+            weaponHolder.AddWeapon(gunPrefab);
         }
-        else if (gM.Player.GetComponent<WeaponHolder>().CurrentWeapons.Count == 2)
+        else if (alreadyHasWeapon)
         {
-            gM.Player.GetComponent<WeaponHolder>().ExchangeWeapon(gunPrefab);
+            // Si ya tiene el arma, comprar munición
+            Debug.Log("Ya tienes esta arma, comprando munición...");
+            weaponHolder.RefillAmmo(weaponName);
+            // Aquí puedes añadir lógica para aumentar la munición
+        }
+        else if (weaponHolder.CurrentWeapons.Count == 2)
+        {
+            // Si el jugador ya tiene 2 armas, intercambiar
+            weaponHolder.ExchangeWeapon(gunPrefab);
         }
     }
 }

@@ -81,6 +81,7 @@ public class WeaponHolder : MonoBehaviour
         currentWeapons[selectedWeaponIndex].SetActive(false);  
         newWeapon.SetActive(true);  
         currentWeapons.Add(newWeapon);
+        selectedWeaponIndex = currentWeapons.Count - 1;
     }
 
     public void RemoveCurrentWeapon()
@@ -111,5 +112,29 @@ public class WeaponHolder : MonoBehaviour
 
         // 3. Equipar la nueva arma
         EquipWeapon(selectedWeaponIndex);
+    }
+
+    public bool HasWeapon(string weaponName)
+    {
+        foreach (GameObject weapon in currentWeapons)
+        {
+            if (weapon.GetComponent<Weapon>().WeaponData.weaponName == weaponName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void RefillAmmo(string weaponName)
+    {
+        foreach (GameObject weapon in currentWeapons)
+        {
+            Weapon weaponScript = weapon.GetComponent<Weapon>();
+            if (weaponScript.WeaponData.weaponName == weaponName)
+            {
+                weaponScript.CurrentAmmo = weaponScript.WeaponData.maxAmmo;
+            }
+        }
     }
 }

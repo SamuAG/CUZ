@@ -4,24 +4,41 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public string weaponName;             // Nombre del arma
-    public int maxAmmo;                   // Máxima cantidad de munición disponible (reserva)
-    public int magazineSize;              // Capacidad del cargador
-    public int magazineAmmo;              // Munición actual en el cargador
-    public int currentAmmo;               // Munición actual en la reserva
-    public float fireRate;                // Cadencia de disparo
-    public float reloadTime;              // Tiempo de recarga
-    public bool isAutomatic;              // Si es automática o semiautomática
+    [SerializeField] private WeaponSO weaponData; // Scriptable Object con los datos del arma
+    protected string weaponName;             // Nombre del arma
+    protected int maxAmmo;                   // Máxima cantidad de munición disponible (reserva)
+    protected int magazineSize;              // Capacidad del cargador
+    [SerializeField] protected int magazineAmmo;              // Munición actual en el cargador
+    [SerializeField] private int currentAmmo;               // Munición actual en la reserva
+    protected float fireRate;                // Cadencia de disparo
+    protected float reloadTime;              // Tiempo de recarga
+    protected bool isAutomatic;              // Si es automática o semiautomática
+    protected float damage;                  // Daño del arma
+    protected float bulletSpeed;             // Velocidad de las balas
+
 
     private bool isReloading = false;
     private float nextFireTime = 0f;
+    public WeaponSO WeaponData { get => weaponData; set => weaponData = value; }
+    public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
 
     // Método abstracto para disparar (definido en subclases)
     public abstract void Shoot();
 
-    private void Start()
+
+    void Awake()
     {
         // Inicializar cargador con munición completa al comienzo
+        weaponName = weaponData.weaponName;
+        maxAmmo = weaponData.maxAmmo;
+        magazineSize = weaponData.magazineSize;
+        fireRate = weaponData.fireRate;
+        reloadTime = weaponData.reloadTime;
+        isAutomatic = weaponData.isAutomatic;
+        damage = weaponData.damage;
+        bulletSpeed = weaponData.bulletSpeed;
+
+
         magazineAmmo = magazineSize;
         currentAmmo = maxAmmo;
     }

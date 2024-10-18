@@ -128,14 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb19602b6b10c24996f107aa6e331f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: TestGun
-  maxAmmo: 2147483647
-  magazineSize: 100
-  magazineAmmo: 100
-  currentAmmo: 2147483647
-  fireRate: 100
-  reloadTime: 0
-  isAutomatic: 0
+  weaponData: {fileID: 11400000, guid: 6ac2b4f23be96af4ebd33f2d4c1d9353, type: 2}
   firePoint: {fileID: 8637403649868675197}
   bulletPrefab: {fileID: 2634007859309474445, guid: ce338a4b51916c24395ce11a6a3378fa,
     type: 3}
