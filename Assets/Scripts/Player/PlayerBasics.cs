@@ -8,7 +8,7 @@ public class PlayerBasics : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gM.Player = this.gameObject;
+       
     }
 
 }
