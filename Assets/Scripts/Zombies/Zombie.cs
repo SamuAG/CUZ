@@ -23,7 +23,18 @@ public class Zombie : MonoBehaviour
         agent.SetDestination(targetPlayer.transform.position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
+            Vector3 targetLocation = (targetPlayer.transform.position - transform.position).normalized;
+            targetLocation.y = 0;
+            Quaternion rotationToTarget = Quaternion.LookRotation(targetLocation);
+            transform.rotation = rotationToTarget;
+            agent.isStopped = true;
             anim.SetBool("Attacking", true);
         }
+    }
+
+    private void PlayerNearAfterAttack()
+    {
+        agent.isStopped = false;
+        anim.SetBool("Attacking", false);
     }
 }
