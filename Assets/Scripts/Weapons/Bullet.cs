@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
-    public float speed = 20f;
-    public float damage = 10f;
-    public float lifeTime = 5f;
+    private float speed = 50f;
+    private float damage = 10f;
+    private float lifeTime = 5f;
+
+    public float BulletDamage { get => damage; set => damage = value; }
 
     // TODO: Implementar lógica para aplicar daño a los objetos impactados
 
@@ -22,10 +24,10 @@ public abstract class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Lógica para aplicar daño a los objetos impactados
-        Debug.Log($"Impacto con {collision.gameObject.name}");
-        ApplyDamage(collision.gameObject);
+        if (collision.gameObject.CompareTag("Zombie"))
+        {
+            Debug.Log("ZombieHit");
+            collision.gameObject.GetComponent<Zombie>().ApplyDamage(damage);
+        }
     }
-
-    protected abstract void ApplyDamage(GameObject target);
 }

@@ -116,12 +116,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2634007859309474445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd76703890906f49ab4b5d2e5eb4b83, type: 3}
+  m_Script: {fileID: 11500000, guid: 0257f03ed955bdf4897fb364a4f2b11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 50
   damage: 10
-  lifeTime: 2
+  lifeTime: 5
 --- !u!54 &-4681799752218815202
 Rigidbody:
   m_ObjectHideFlags: 0

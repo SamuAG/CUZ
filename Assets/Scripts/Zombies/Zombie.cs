@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Zombie : MonoBehaviour
+public class Zombie : MonoBehaviour, Damageable
 {
 
     private NavMeshAgent agent;
     private PlayerBasics targetPlayer;
     private Animator anim;
+    private float health = 100f;
     [SerializeField] private GameManagerSO gameManager;
 
     void Start()
@@ -36,5 +37,12 @@ public class Zombie : MonoBehaviour
     {
         agent.isStopped = false;
         anim.SetBool("Attacking", false);
+    }
+
+    public void ApplyDamage(float damage)
+    {
+        health-= damage;
+        //Hacer animacion de muerte
+        if (health < 0) Destroy(gameObject);
     }
 }
