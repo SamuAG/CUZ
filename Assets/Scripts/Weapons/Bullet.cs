@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 50f;
-    private float damage = 10f;
+    private float speed = 20f;
+    private float damage = 50f;
     private float lifeTime = 5f;
 
     public float BulletDamage { get => damage; set => damage = value; }
@@ -24,10 +24,9 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Zombie"))
+        if (collision.gameObject.TryGetComponent(out Damageable damageable) && collision.gameObject.CompareTag("Zombie"))
         {
-            Debug.Log("ZombieHit");
-            collision.gameObject.GetComponent<Zombie>().ApplyDamage(damage);
+            damageable.ApplyDamage(damage);
         }
     }
 }

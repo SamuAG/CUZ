@@ -22,14 +22,12 @@ public class PlayerInteract : MonoBehaviour
     {
         // Raycast para detectar objetos interactuables desde la cámara
         RaycastHit hit;
-        Debug.Log("aaaa");
         if (Physics.Raycast(cam.position, cam.forward, out hit, range, layerMask))
         {
             Debug.Log(hit.collider.gameObject.name);
             IInteract target;
             if (hit.collider.gameObject.TryGetComponent<IInteract>(out target))
             {
-                Debug.Log("aaaa");
                 target.interact();
             }
         }

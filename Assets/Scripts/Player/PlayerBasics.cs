@@ -21,7 +21,7 @@ public class PlayerBasics : MonoBehaviour, Damageable
     }
 
     public void ApplyDamage(float damage)
-    {  
+    {
         currentHealth -= damage;
 
    

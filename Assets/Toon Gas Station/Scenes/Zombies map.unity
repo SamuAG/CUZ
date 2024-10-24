@@ -11940,11 +11940,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -5074816093363304729, guid: f99bbd0754201f448b27f0c455b92b76,
-        type: 3}
-      propertyPath: m_AngularSpeed
-      value: 240
-      objectReference: {fileID: 0}
     - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11999,16 +11994,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Zombie
-      objectReference: {fileID: 0}
-    - target: {fileID: 2425678034757815742, guid: f99bbd0754201f448b27f0c455b92b76,
-        type: 3}
-      propertyPath: m_Height
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2425678034757815742, guid: f99bbd0754201f448b27f0c455b92b76,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14694,7 +14679,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.65
   m_Height: 0.7
@@ -14707,7 +14692,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838003041}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 678d45237cec56b4b99de53e293acb69, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

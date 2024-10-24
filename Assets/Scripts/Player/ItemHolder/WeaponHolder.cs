@@ -66,11 +66,11 @@ public class WeaponHolder : MonoBehaviour
         if (currentWeapons[index] != null)
         {
             currentWeapons[index].SetActive(true);
-            Debug.Log($"Arma equipada: {currentWeapons[index].name}");
+            //Debug.Log($"Arma equipada: {currentWeapons[index].name}");
         }
         else
         {
-            Debug.LogError("No se encontró el arma seleccionada.");
+            //Debug.LogError("No se encontró el arma seleccionada.");
         }
     }
 
