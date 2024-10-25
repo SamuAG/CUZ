@@ -59,7 +59,7 @@ public class Zombie : MonoBehaviour, Damageable
 
     public void ApplyDamage(float damage)
     {
-        health-= damage;
+        health -= damage;
         //Hacer animacion de muerte
         if (health < 0) Destroy(gameObject);
     }

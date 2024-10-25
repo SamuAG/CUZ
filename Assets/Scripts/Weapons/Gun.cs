@@ -2,13 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
+
 
 public class Gun : Weapon
 {
     public Transform firePoint;   // Punto de disparo del arma
     public GameObject bulletPrefab; // Prefab de la bala
     bool isShooting = false;
-    [SerializeField] private InputManagerSO input;
+    [SerializeField]
+    private InputManagerSO input;
+    [SerializeField]
+    private LineRenderer _lineRenderer = null;
+    [SerializeField]
+    private bool _debugMode = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (_lineRenderer == null)
+            _lineRenderer = GetComponent<LineRenderer>();
+    }
 
     private void OnEnable()
     {
@@ -67,18 +82,30 @@ public class Gun : Weapon
 
     public override void Shoot()
     {
-        if (!CanShoot()) return;
+        if (!CanShoot()) { Debug.Log("Can not shoot!");  return; }
 
         // Disparar una bala
         Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
-        Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation).GetComponent<Bullet>();
 
-        bullet.BulletDamage = damage;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity))
+            if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Zombie"))
+                if(hit.transform.TryGetComponent(out Zombie zombie))
+                    zombie.ApplyDamage(damage);
 
-        // Reducir munición
+
+        DebugLine();
         ReduceAmmo();
+        StartShootCooldown();
+    }
 
-        // Aplicar la cadencia de disparo
-        ApplyFireRate();
+    private void DebugLine()
+    {
+        if (_debugMode && _lineRenderer != null)
+        {
+            _lineRenderer.positionCount = 2;
+            _lineRenderer.SetPosition(0, transform.position);
+            _lineRenderer.SetPosition(1, transform.position + transform.TransformDirection(Vector3.forward) * 100);
+        }
     }
 }

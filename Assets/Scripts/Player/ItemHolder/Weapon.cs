@@ -15,7 +15,7 @@ public abstract class Weapon : MonoBehaviour
     protected bool isAutomatic;              // Si es automática o semiautomática
     protected float damage;                  // Daño del arma
     protected float bulletSpeed;             // Velocidad de las balas
-
+    protected bool _inCooldown = false;
 
     private bool isReloading = false;
     private float nextFireTime = 0f;
@@ -26,7 +26,7 @@ public abstract class Weapon : MonoBehaviour
     public abstract void Shoot();
 
 
-    void Awake()
+    protected virtual void Awake()
     {
         // Inicializar cargador con munición completa al comienzo
         weaponName = weaponData.weaponName;
@@ -40,7 +40,7 @@ public abstract class Weapon : MonoBehaviour
 
 
         magazineAmmo = magazineSize;
-        currentAmmo = maxAmmo;
+        currentAmmo = maxAmmo - magazineAmmo;
     }
 
     public void StartReload()
@@ -69,13 +69,32 @@ public abstract class Weapon : MonoBehaviour
 
     protected bool CanShoot()
     {
-        return Time.time >= nextFireTime && magazineAmmo > 0 && !isReloading;
+        return !_inCooldown && magazineAmmo > 0 && !isReloading;
     }
 
-    protected void ApplyFireRate()
+    #region Cooldown
+    Coroutine _cooldownRoutine = null;
+    
+    protected void StartShootCooldown()
     {
-        nextFireTime = Time.time + 1f / fireRate;
+        _cooldownRoutine ??= StartCoroutine(ShootCooldown());
     }
+
+    IEnumerator ShootCooldown()
+    {
+        _inCooldown = true;
+        float t = 0;
+        while (t < fireRate)
+        {
+            t += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        _inCooldown = false;
+        _cooldownRoutine = null;
+    }
+    #endregion
+
 
     public void ReduceAmmo()
     {

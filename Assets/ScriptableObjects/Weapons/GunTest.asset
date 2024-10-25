@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Big Fucking Gun
   maxAmmo: 120
   magazineSize: 20
-  fireRate: 10
+  fireRate: 0.1
   reloadTime: 1
   isAutomatic: 1
   damage: 10
