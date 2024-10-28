@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "GameManagerSO", menuName = "ScriptableObjects/GameManagerSO", order = 1)]
 public class GameManagerSO : ScriptableObject
@@ -11,10 +9,13 @@ public class GameManagerSO : ScriptableObject
 
     [NonSerialized] private int rounds = 1;
 
+    public event Action<int> OnUpdateRounds;
+
+
     //Recicaldo de otro proyecto, se podria usar para añadir objetos y udpatear rondas
     //public event Action<ItemSO> OnNewItem;
     //public event Action<ItemSO> OnRemoveItem;
-    //public event Action<int> OnUpdateRounds;
+
 
     public PlayerBasics Player { get => player; }
     public int Rounds { get => rounds; }
@@ -30,7 +31,13 @@ public class GameManagerSO : ScriptableObject
     {
         player = FindAnyObjectByType<PlayerBasics>();
     }
-    
+
+    public void AddRound(int round)
+    {
+        rounds += round;
+        OnUpdateRounds?.Invoke(rounds);
+    }
+
     /*
     //Evento para añadir un item
     public void NewItem(ItemSO itemSO)
@@ -42,13 +49,6 @@ public class GameManagerSO : ScriptableObject
     public void RemoveItem(ItemSO itemSO)
     {
         OnRemoveItem?.Invoke(itemSO);
-    }
-
-    //Evento para añadir rondas
-    public void AddRound(int round)
-    {
-        rounds += round;
-        OnUpdateRounds?.Invoke(rounds);
     }
     */
 

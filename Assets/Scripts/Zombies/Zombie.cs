@@ -1,20 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour, Damageable
 {
 
+    public event Action OnZombieDeath;
+
     private NavMeshAgent agent;
     private PlayerBasics targetPlayer;
     private Animator anim;
     private float damage = 1f;
-    private float health = 100f;
+    private float health;
 
     [SerializeField] private GameManagerSO gameManager;
     [SerializeField] private Transform AttackPoint;
     [SerializeField] private float AttackRadius;
+
+    public float Health { get => health; set => health = value; }
 
     void Start()
     {
@@ -61,7 +64,10 @@ public class Zombie : MonoBehaviour, Damageable
     {
         health -= damage;
         //Hacer animacion de muerte
-        if (health < 0) Destroy(gameObject);
+        if (health < 0) {
+            OnZombieDeath?.Invoke();
+            Destroy(gameObject);
+        }
     }
 
     private void OnDrawGizmos()
