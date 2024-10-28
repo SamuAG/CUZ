@@ -22,7 +22,7 @@ public class GameManagerSO : ScriptableObject
 
     private void OnEnable()
     {
-        //El game manager se sucribe al evento de la carga de una nueva escena
+        //El game manager se suscribe al evento de la carga de una nueva escena
         SceneManager.sceneLoaded += SceneLoaded;
     }
 

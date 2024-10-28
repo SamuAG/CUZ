@@ -14,7 +14,6 @@ public class ZombieSpawner : MonoBehaviour
     private int zombiesRemaining = 0;
     private float healthIncrement = 20f;
 
-    // Start is called before the first frame update
     void Start()
     {
         foreach (Transform child in transform)
@@ -41,7 +40,7 @@ public class ZombieSpawner : MonoBehaviour
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
         Vector3 randomOffset = new Vector3(
-            Random.Range(-2f, 2f),  // Puedes ajustar estos valores para modificar el área de spawn
+            Random.Range(-2f, 2f), 
             0,
             Random.Range(-2f, 2f)
         );
