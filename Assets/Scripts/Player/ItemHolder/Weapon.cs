@@ -52,7 +52,7 @@ public abstract class Weapon : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
-        Debug.Log("Recargando...");
+        //Debug.Log("Recargando...");
         yield return new WaitForSeconds(reloadTime);
 
         // Calcular la cantidad de balas que se pueden recargar en el cargador
@@ -64,7 +64,7 @@ public abstract class Weapon : MonoBehaviour
         currentAmmo -= ammoToReload;
 
         isReloading = false;
-        Debug.Log("Recarga completa. Munición en cargador: " + magazineAmmo + " / Munición restante: " + currentAmmo);
+       // Debug.Log("Recarga completa. Munición en cargador: " + magazineAmmo + " / Munición restante: " + currentAmmo);
     }
 
     protected bool CanShoot()

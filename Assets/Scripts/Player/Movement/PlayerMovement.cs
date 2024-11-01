@@ -14,12 +14,13 @@ public class FirstPersonControllerRigidbody : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     public LayerMask ceilingMask;
-
+    
     private Rigidbody rb;
     private Transform playerCamera;
     private bool isGrounded;
     private bool isCrouching = false;
     private bool isSprinting = false;
+    private float sensitivity = 0.05f;
 
     private float xRotation = 0f;
     
@@ -71,13 +72,13 @@ public class FirstPersonControllerRigidbody : MonoBehaviour
 
     private void CameraPerformed(Vector2 delta)
     {
-        cameraInput = delta;
+        cameraInput = delta * sensitivity;
         
     }
 
     private void CameraCanceled()
     {
-        cameraInput = new Vector2(0, 0);
+        cameraInput = Vector2.zero;
     }
 
     private void SprintStarted()

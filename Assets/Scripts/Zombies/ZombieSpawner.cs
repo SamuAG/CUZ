@@ -29,9 +29,15 @@ public class ZombieSpawner : MonoBehaviour
     {
         round = currentRound;
         zombiesRemaining = Mathf.Min(24 + (round - 1) * 6, 24 * 4); // Máximo de 24 zombies en pantalla por jugador
+        StartCoroutine(SpawnZombies());
+    }
+
+    private IEnumerator SpawnZombies()
+    {
         for (int i = 0; i < zombiesRemaining; i++)
         {
             SpawnZombie();
+            yield return new WaitForSeconds(0.1f); 
         }
     }
 

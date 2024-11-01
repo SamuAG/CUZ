@@ -82,16 +82,21 @@ public class Gun : Weapon
 
     public override void Shoot()
     {
-        if (!CanShoot()) { Debug.Log("Can not shoot!");  return; }
+       // if (!CanShoot()) { Debug.Log("Can not shoot!");  return; }
 
         // Disparar una bala
-        Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
+        //Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
 
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity))
-            if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Zombie"))
-                if(hit.transform.TryGetComponent(out Zombie zombie))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity)) {
+
+            if (hit.transform.gameObject.CompareTag("Zombie"))
+            {
+                if (hit.transform.TryGetComponent(out Zombie zombie))
                     zombie.ApplyDamage(damage);
+            }     
+        }
+           
 
 
         DebugLine();
