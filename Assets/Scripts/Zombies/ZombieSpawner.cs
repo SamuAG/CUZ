@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-
     [SerializeField] private GameManagerSO gM;
     [SerializeField] private GameObject zombiePrefab;
-
 
     private List<Transform> spawnPoints = new List<Transform>();
     private int round = 0;
@@ -28,7 +26,7 @@ public class ZombieSpawner : MonoBehaviour
     private void StartNewRound(int currentRound)
     {
         round = currentRound;
-        zombiesRemaining = Mathf.Min(24 + (round - 1) * 6, 24 * 4); // Máximo de 24 zombies en pantalla por jugador
+        zombiesRemaining = Mathf.Min(24 + (round - 1) * 6, 24 * 4); 
         StartCoroutine(SpawnZombies());
     }
 
@@ -37,16 +35,15 @@ public class ZombieSpawner : MonoBehaviour
         for (int i = 0; i < zombiesRemaining; i++)
         {
             SpawnZombie();
-            yield return new WaitForSeconds(0.1f); 
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
     private void SpawnZombie()
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-
         Vector3 randomOffset = new Vector3(
-            Random.Range(-2f, 2f), 
+            Random.Range(-2f, 2f),
             0,
             Random.Range(-2f, 2f)
         );
@@ -56,19 +53,20 @@ public class ZombieSpawner : MonoBehaviour
 
         Zombie zombieScript = zombie.GetComponent<Zombie>();
         zombieScript.Health = (100f + (round - 1) * healthIncrement);
-        zombieScript.OnZombieDeath += HandleZombieDeath;
     }
 
-    private void HandleZombieDeath()
+    public void DecreaseZombieCount()
     {
         zombiesRemaining--;
+        Debug.Log("Zombi muerto. Zombies restantes: " + zombiesRemaining);
+
         if (zombiesRemaining <= 0)
         {
-            gM.AddRound(1); //Si no quedan zombies avanzamos de ronda
+            gM.AddRound(1); // Si no quedan zombies, avanzamos de ronda
         }
     }
 
-    //Limpiamos la suscripcion para que no haya problemas
+    // Limpiamos la suscripción para que no haya problemas
     private void OnDestroy()
     {
         gM.OnUpdateRounds -= StartNewRound;

@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour, Damageable
 {
-    public event Action OnZombieDeath;
-
     private NavMeshAgent agent;
     private PlayerBasics targetPlayer;
     private Animator anim;
@@ -72,11 +70,20 @@ public class Zombie : MonoBehaviour, Damageable
     public void ApplyDamage(float damage)
     {
         health -= damage;
-        if (health < 0)
+        if (health <= 0)
         {
-            OnZombieDeath?.Invoke();
-            Destroy(gameObject);
+            ZombieDie();
         }
+    }
+
+    private void ZombieDie()
+    {
+        ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
+        if (spawner != null)
+        {
+            spawner.DecreaseZombieCount();
+        }
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()

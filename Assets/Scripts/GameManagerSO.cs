@@ -34,8 +34,10 @@ public class GameManagerSO : ScriptableObject
 
     public void AddRound(int round)
     {
+        Debug.Log("Ronda: "+ Rounds);
         rounds += round;
         OnUpdateRounds?.Invoke(rounds);
+        Debug.Log("Pasamos a ronda: " + Rounds);
     }
 
     /*
