@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +9,7 @@ public class Zombie : MonoBehaviour, Damageable
     private Animator anim;
     private float damage = 1f;
     private float health;
+    private bool isDead = false;
 
     [SerializeField] private GameManagerSO gameManager;
     [SerializeField] private Transform AttackPoint;
@@ -27,6 +28,8 @@ public class Zombie : MonoBehaviour, Damageable
 
     void Update()
     {
+        if (isDead) return;
+
         agent.SetDestination(targetPlayer.transform.position);
 
         float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
@@ -72,17 +75,25 @@ public class Zombie : MonoBehaviour, Damageable
         health -= damage;
         if (health <= 0)
         {
-            ZombieDie();
+            gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            isDead = true;
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+            agent.enabled = false;
+            anim.SetTrigger("IsDead");
+            ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
+            if (spawner != null)
+            {
+
+                spawner.DecreaseZombieCount();
+            }
+            StartCoroutine(DestroyZombie());
         }
     }
 
-    private void ZombieDie()
+    private IEnumerator DestroyZombie()
     {
-        ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
-        if (spawner != null)
-        {
-            spawner.DecreaseZombieCount();
-        }
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
 

@@ -552,6 +552,7 @@ MonoBehaviour:
   gameManager: {fileID: 11400000, guid: 8d70f5c645daef6449c341c57ce6b723, type: 2}
   AttackPoint: {fileID: 677103453610753182}
   AttackRadius: 0.3
+  attackDistance: 2
 --- !u!195 &-5074816093363304729
 NavMeshAgent:
   m_ObjectHideFlags: 0
