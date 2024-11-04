@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7be9ab7fd5c993442b553c55d7dee292
+  - enabled: 1
     path: Assets/Scenes/Zombies map.unity
     guid: 40ef6e60490d68541971945758777f58
   - enabled: 0
