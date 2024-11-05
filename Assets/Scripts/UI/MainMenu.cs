@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private Button continueButton;
     [SerializeField] private string levelName = "Zombies map";
+    [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject optionsPanel;
 
     private void Start()
@@ -27,9 +27,9 @@ public class MainMenu : MonoBehaviour
         optionsPanel.SetActive(!optionsPanel.activeSelf);
     }
 
-    public void OpenLink(string link)
+    public void ToggleMainPanel()
     {
-        Application.OpenURL(link);
+        mainPanel.SetActive(!mainPanel.activeSelf);
     }
 
     public void Quit()
