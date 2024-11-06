@@ -70,19 +70,20 @@ public class Gun : Weapon
 
     private void ShootAuto()
     {
-        
         isShooting = true;
     }
 
     private void ShootAutoCancel()
     {
-        
         isShooting = false;
     }
 
     public override void Shoot()
     {
-       // if (!CanShoot()) { Debug.Log("Can not shoot!");  return; }
+        if (!CanShoot()) { 
+            //Debug.Log("Can not shoot!");
+            return;
+        }
 
         // Disparar una bala
         //Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
