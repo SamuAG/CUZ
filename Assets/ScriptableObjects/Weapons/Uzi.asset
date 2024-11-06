@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Uzi
   m_EditorClassIdentifier: 
   weaponName: Big Fucking Gun
-  maxAmmo: 120
-  magazineSize: 20
+  maxAmmo: 240
+  magazineSize: 45
   fireRate: 0.1
   reloadTime: 1
   isAutomatic: 1
-  damage: 10
+  damage: 20
   bulletSpeed: 50

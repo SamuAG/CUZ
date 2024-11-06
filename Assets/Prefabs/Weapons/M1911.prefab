@@ -249,12 +249,12 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 52b96a08237584145886ddf572923518, type: 2}
   magazineAmmo: 0
   currentAmmo: 0
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 4791458837961743895}
   bulletPrefab: {fileID: 2634007859309474445, guid: ce338a4b51916c24395ce11a6a3378fa,
     type: 3}
   input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
   _lineRenderer: {fileID: 1776006741045356151}
-  _debugMode: 0
+  _debugMode: 1
 --- !u!120 &1776006741045356151
 LineRenderer:
   serializedVersion: 2

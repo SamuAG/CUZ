@@ -17,14 +17,28 @@ public class Gun : Weapon
     [SerializeField]
     private bool _debugMode = false;
 
+    private Animator anim;
     protected override void Awake()
     {
         base.Awake();
+
+        anim = GetComponent<Animator>();
 
         if (_lineRenderer == null)
             _lineRenderer = GetComponent<LineRenderer>();
     }
 
+    private void Update()
+    {
+        if (isAutomatic)
+        {
+            if (isShooting)
+            {
+
+                Shoot();
+            }
+        }
+    }
     private void OnEnable()
     {
         if(isAutomatic)
@@ -54,20 +68,6 @@ public class Gun : Weapon
         input.OnReloadStarted -= StartReload;
     }
 
-    
-
-    private void Update()
-    {
-        if(isAutomatic)
-        {
-            if (isShooting)
-            {
-
-                Shoot();
-            }
-        }
-    }
-
     private void ShootAuto()
     {
         isShooting = true;
@@ -87,7 +87,7 @@ public class Gun : Weapon
 
         // Disparar una bala
         //Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
-
+        anim.SetTrigger("shoot");
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity)) {
 

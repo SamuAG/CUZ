@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: M249
   m_EditorClassIdentifier: 
   weaponName: Big Fucking Gun
-  maxAmmo: 120
-  magazineSize: 20
+  maxAmmo: 300
+  magazineSize: 150
   fireRate: 0.1
   reloadTime: 1
   isAutomatic: 1
-  damage: 10
+  damage: 80
   bulletSpeed: 50

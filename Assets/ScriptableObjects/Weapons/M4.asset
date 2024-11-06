@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02aa29352d6e8842a61410eb6454917, type: 3}
   m_Name: M4
   m_EditorClassIdentifier: 
-  weaponName: Big Fucking Gun
-  maxAmmo: 120
-  magazineSize: 20
+  weaponName: M4
+  maxAmmo: 240
+  magazineSize: 40
   fireRate: 0.1
   reloadTime: 1
   isAutomatic: 1
-  damage: 10
+  damage: 20
   bulletSpeed: 50

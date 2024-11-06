@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RPG
   m_EditorClassIdentifier: 
   weaponName: Big Fucking Gun
-  maxAmmo: 120
-  magazineSize: 20
+  maxAmmo: 5
+  magazineSize: 0
   fireRate: 0.1
   reloadTime: 1
   isAutomatic: 1
-  damage: 10
+  damage: 100
   bulletSpeed: 50
