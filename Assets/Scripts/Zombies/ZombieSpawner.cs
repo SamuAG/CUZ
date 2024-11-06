@@ -9,6 +9,7 @@ public class ZombieSpawner : MonoBehaviour
 
     private List<Transform> spawnPoints = new List<Transform>();
     private int round = 0;
+    private int zombiesToSpawn = 0;
     private int zombiesRemaining = 0;
     private float healthIncrement = 20f;
 
@@ -26,13 +27,14 @@ public class ZombieSpawner : MonoBehaviour
     private void StartNewRound(int currentRound)
     {
         round = currentRound;
-        zombiesRemaining = Mathf.Min(24 + (round - 1) * 6, 24 * 4); 
+        zombiesToSpawn = Mathf.Min(24 + (round - 1) * 6, 24 * 4);
+        zombiesRemaining = zombiesToSpawn;
         StartCoroutine(SpawnZombies());
     }
 
     private IEnumerator SpawnZombies()
     {
-        for (int i = 0; i < zombiesRemaining; i++)
+        for (int i = 0; i < zombiesToSpawn; i++)
         {
             SpawnZombie();
             yield return new WaitForSeconds(0.5f);
