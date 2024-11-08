@@ -8,8 +8,11 @@ public class WeaponHolder : MonoBehaviour
     public List<GameObject> baseWeaponsPrefabs;  // Prefabs de las armas
     public Transform handTransform;         // Transform de la mano donde se spawnearán las armas
     public int selectedWeaponIndex = 0;
+
     [SerializeField] private InputManagerSO input;
 
+    [SerializeField] private GameObject grenadePrefab;
+    [SerializeField] private Transform grenadePoint;
     private List<GameObject> currentWeapons = new List<GameObject>();  // Armas equipadas
 
     public List<GameObject> CurrentWeapons { get => currentWeapons; }
@@ -30,6 +33,11 @@ public class WeaponHolder : MonoBehaviour
         InitializeWeapons();
         EquipWeapon(selectedWeaponIndex);
         
+    }
+
+    private void Update()
+    {
+        ThrowGrenade();
     }
 
     private void InitializeWeapons()
@@ -133,8 +141,17 @@ public class WeaponHolder : MonoBehaviour
             Weapon weaponScript = weapon.GetComponent<Weapon>();
             if (weaponScript.WeaponData.weaponName == weaponName)
             {
+                weapon.GetComponent<Gun>().ReloadAmmo();
                 weaponScript.CurrentAmmo = weaponScript.WeaponData.maxAmmo;
             }
+        }
+    }
+
+    private void ThrowGrenade()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Instantiate(grenadePrefab, handTransform.transform.position, handTransform.rotation);
         }
     }
 }

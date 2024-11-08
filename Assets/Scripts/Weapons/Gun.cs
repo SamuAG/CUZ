@@ -17,12 +17,9 @@ public class Gun : Weapon
     [SerializeField]
     private bool _debugMode = false;
 
-    private Animator anim;
     protected override void Awake()
     {
         base.Awake();
-
-        anim = GetComponent<Animator>();
 
         if (_lineRenderer == null)
             _lineRenderer = GetComponent<LineRenderer>();
@@ -97,12 +94,15 @@ public class Gun : Weapon
                     zombie.ApplyDamage(damage);
             }     
         }
-           
-
 
         DebugLine();
         ReduceAmmo();
         StartShootCooldown();
+    }
+
+    public void ReloadAmmo()
+    {
+        anim.SetTrigger("reload");
     }
 
     private void DebugLine()

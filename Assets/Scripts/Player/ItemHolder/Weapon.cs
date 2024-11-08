@@ -16,11 +16,13 @@ public abstract class Weapon : MonoBehaviour
     protected float damage;                  // Daño del arma
     protected float bulletSpeed;             // Velocidad de las balas
     protected bool _inCooldown = false;
+    protected Animator anim;
 
     private bool isReloading = false;
     private float nextFireTime = 0f;
     public WeaponSO WeaponData { get => weaponData; set => weaponData = value; }
     public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
+    
 
     // Método abstracto para disparar (definido en subclases)
     public abstract void Shoot();
@@ -41,6 +43,8 @@ public abstract class Weapon : MonoBehaviour
 
         magazineAmmo = magazineSize;
         currentAmmo = maxAmmo - magazineAmmo;
+
+        anim = GetComponent<Animator>();
     }
 
     public void StartReload()
@@ -53,6 +57,7 @@ public abstract class Weapon : MonoBehaviour
     {
         isReloading = true;
         //Debug.Log("Recargando...");
+        anim.SetTrigger("reload");
         yield return new WaitForSeconds(reloadTime);
 
         // Calcular la cantidad de balas que se pueden recargar en el cargador
