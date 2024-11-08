@@ -4592,7 +4592,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 525701879}
-  - component: {fileID: 525701878}
   m_Layer: 0
   m_Name: ZombiePool
   m_TagString: Untagged
@@ -4600,21 +4599,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &525701878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 525701877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfa20a2f52609a64599bcf0d403e1dbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zombiePrefab: {fileID: 1776966266084158026, guid: f99bbd0754201f448b27f0c455b92b76,
-    type: 3}
-  initialPoolSize: 24
 --- !u!4 &525701879
 Transform:
   m_ObjectHideFlags: 0
@@ -15725,7 +15709,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!136 &1838003047

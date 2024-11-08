@@ -99,11 +99,12 @@ public class FirstPersonControllerRigidbody : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        // Movimiento del mouse para rotación de la cámara
+        
         float mouseX = cameraInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = cameraInput.y * mouseSensitivity * Time.deltaTime;
 
@@ -112,21 +113,29 @@ public class FirstPersonControllerRigidbody : MonoBehaviour
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-        // Aplicar movimiento
+        
         Vector3 move = transform.right * movimiento.x + transform.forward * movimiento.z;
         float currentSpeed = isCrouching ? crouchSpeed : (isSprinting ? runSpeed : speed);
 
         Vector3 velocity = move * currentSpeed;
-        velocity.y = rb.velocity.y;
-        rb.velocity = velocity;
-
 
         
-        if(hasStoppedCrouching)
+        float verticalVelocity = rb.velocity.y;
+
+        
+        if (!isGrounded)
+        {
+            verticalVelocity = Mathf.Clamp(rb.velocity.y, -10f, 1f); //Limitamos la velocidad de salto
+        }
+
+
+        velocity.y = verticalVelocity;
+        rb.velocity = velocity;
+
+        if (hasStoppedCrouching)
         {
             TryStandUp();
         }
-        
     }
 
     void Crouch()

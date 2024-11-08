@@ -10,11 +10,16 @@ public class Zombie : MonoBehaviour, Damageable
     private float damage = 1f;
     private float health;
     private bool isDead = false;
+    private AudioSource audioSource;
+    private const float soundProbability = 0.2f; 
 
     [SerializeField] private GameManagerSO gameManager;
     [SerializeField] private Transform AttackPoint;
     [SerializeField] private float AttackRadius;
     [SerializeField] private float attackDistance = 2f;
+
+    [SerializeField] private AudioClip[] zombieSound;
+    [SerializeField] private AudioClip[] zombieAttack;
 
     public float Health { get => health; set => health = value; }
 
@@ -24,6 +29,9 @@ public class Zombie : MonoBehaviour, Damageable
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         agent.SetDestination(targetPlayer.transform.position);
+
+        audioSource = GetComponentInParent<AudioSource>();
+        StartCoroutine(PlaySound());
     }
 
     void Update()
@@ -65,6 +73,8 @@ public class Zombie : MonoBehaviour, Damageable
         {
             if (collider.TryGetComponent(out Damageable damageable) && collider.CompareTag("Player"))
             {
+                int randomIndex = Random.Range(0, zombieAttack.Length);
+                audioSource.PlayOneShot(zombieAttack[randomIndex]);
                 damageable.ApplyDamage(damage);
             }
         }
@@ -100,5 +110,19 @@ public class Zombie : MonoBehaviour, Damageable
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(AttackPoint.position, AttackRadius);
+    }
+
+    private IEnumerator PlaySound()
+    {
+        while (!isDead)
+        {
+            yield return new WaitForSeconds(3f); 
+
+            if (Random.value < soundProbability)
+            {
+                int randomIndex = Random.Range(0, zombieSound.Length);
+                audioSource.PlayOneShot(zombieSound[randomIndex]);
+            }
+        }
     }
 }
