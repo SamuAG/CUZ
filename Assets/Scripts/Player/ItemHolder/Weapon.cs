@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public abstract class Weapon : MonoBehaviour
     protected int magazineSize;              // Capacidad del cargador
     [SerializeField] protected int magazineAmmo;              // Munición actual en el cargador
     [SerializeField] private int currentAmmo;               // Munición actual en la reserva
+    [SerializeField] protected ParticleSystem shootingParticles;               // Sistema de partículas de disparo
     protected float fireRate;                // Cadencia de disparo
     protected float reloadTime;              // Tiempo de recarga
     protected bool isAutomatic;              // Si es automática o semiautomática
@@ -25,6 +27,7 @@ public abstract class Weapon : MonoBehaviour
     protected float bulletSpeed;             // Velocidad de las balas
     protected bool _inCooldown = false;
     protected Animator anim;
+    protected AudioSource audioSource;
 
     private bool isReloading = false;
     private float nextFireTime = 0f;
@@ -55,7 +58,7 @@ public abstract class Weapon : MonoBehaviour
         currentAmmo = maxAmmo - magazineAmmo;
 
         anim = GetComponent<Animator>();
-
+        audioSource = GetComponent<AudioSource>();
         OnShoot += ReduceAmmo;
     }
 

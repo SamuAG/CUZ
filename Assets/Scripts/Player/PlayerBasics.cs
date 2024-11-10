@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBasics : MonoBehaviour, Damageable
 {
 
-    private float maxHealth = 3f;
-    private float regenerationRate = 0.5f;
+    private float maxHealth = 100f;
+    private float regenerationRate = 10f;
     private float damageCooldown = 5f;
     private float currentHealth;
     private Coroutine regenCoroutine;
 
+    [SerializeField] Image damagedFrame;
     [SerializeField] GameManagerSO gM;
-   
-
     
     void Start()
     {
@@ -24,7 +24,8 @@ public class PlayerBasics : MonoBehaviour, Damageable
     {
         currentHealth -= damage;
 
-   
+        UpdateDamageUI();
+
         if (currentHealth <= 0)
         {
             Die();
@@ -46,11 +47,20 @@ public class PlayerBasics : MonoBehaviour, Damageable
         while (currentHealth < maxHealth)
         {
             currentHealth += regenerationRate * Time.deltaTime;
-            currentHealth = Mathf.Min(currentHealth, maxHealth);  
+            currentHealth = Mathf.Min(currentHealth, maxHealth);
+            UpdateDamageUI();
             yield return null; 
         }
 
         regenCoroutine = null;
+    }
+
+    private void UpdateDamageUI()
+    {
+        Color damagedUI = damagedFrame.color;
+        damagedUI.a = 1 - (currentHealth/maxHealth);
+
+        damagedFrame.color = damagedUI;
     }
 
     private void Die()

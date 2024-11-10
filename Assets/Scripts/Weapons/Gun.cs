@@ -85,6 +85,8 @@ public class Gun : Weapon
         // Disparar una bala
         //Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
         anim.SetTrigger("shoot");
+        audioSource.Play();
+        shootingParticles.Play();
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity)) {
 

@@ -7,7 +7,7 @@ public class Zombie : MonoBehaviour, Damageable
     private NavMeshAgent agent;
     private PlayerBasics targetPlayer;
     private Animator anim;
-    private float damage = 1f;
+    private float damage = 10f;
     private float health;
     private bool isDead = false;
     private AudioSource audioSource;
