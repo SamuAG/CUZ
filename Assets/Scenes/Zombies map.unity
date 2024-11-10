@@ -11008,8 +11008,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18729,6 +18729,7 @@ MonoBehaviour:
   - {fileID: 1694449805434718, guid: 6f1a7354265853f44b0ed5e2e43676ad, type: 3}
   handTransform: {fileID: 374803422}
   selectedWeaponIndex: 0
+  grenadeCount: 3
   input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
   grenadePrefab: {fileID: 1698056052845220, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff,
     type: 3}

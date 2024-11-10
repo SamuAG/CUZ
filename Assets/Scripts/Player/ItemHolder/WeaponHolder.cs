@@ -8,6 +8,7 @@ public class WeaponHolder : MonoBehaviour
     public List<GameObject> baseWeaponsPrefabs;  // Prefabs de las armas
     public Transform handTransform;         // Transform de la mano donde se spawnearán las armas
     public int selectedWeaponIndex = 0;
+    public int grenadeCount = 2;
 
     [SerializeField] private InputManagerSO input;
 
@@ -32,7 +33,7 @@ public class WeaponHolder : MonoBehaviour
         // Inicializa las armas (activando solo la seleccionada)
         InitializeWeapons();
         EquipWeapon(selectedWeaponIndex);
-        
+        CanvasManager.Instance.GrenadeTMP.text = "" + grenadeCount;
     }
 
     private void Update()
@@ -150,9 +151,11 @@ public class WeaponHolder : MonoBehaviour
 
     private void ThrowGrenade()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && grenadeCount > 0)
         {
             Instantiate(grenadePrefab, handTransform.transform.position, handTransform.rotation);
+            grenadeCount--;
+            CanvasManager.Instance.GrenadeTMP.text = "" + grenadeCount;
         }
     }
 }
