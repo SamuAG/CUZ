@@ -86,7 +86,7 @@ public class Gun : Weapon
         //Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
         anim.SetTrigger("shoot");
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity)) {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity)) {
 
             if (hit.transform.gameObject.CompareTag("Zombie"))
             {
@@ -111,8 +111,8 @@ public class Gun : Weapon
         if (_debugMode && _lineRenderer != null)
         {
             _lineRenderer.positionCount = 2;
-            _lineRenderer.SetPosition(0, transform.position);
-            _lineRenderer.SetPosition(1, transform.position + transform.TransformDirection(Vector3.forward) * 100);
+            _lineRenderer.SetPosition(0, Camera.main.transform.position);
+            _lineRenderer.SetPosition(1, Camera.main.transform.position + Camera.main.transform.TransformDirection(Vector3.forward) * 100);
         }
     }
 }
