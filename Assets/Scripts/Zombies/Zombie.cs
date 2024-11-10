@@ -83,6 +83,8 @@ public class Zombie : MonoBehaviour, Damageable
     public void ApplyDamage(float damage)
     {
         health -= damage;
+        gameManager.AddPoints(10);
+
         if (health <= 0)
         {
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
@@ -98,6 +100,8 @@ public class Zombie : MonoBehaviour, Damageable
                 spawner.DecreaseZombieCount();
             }
             StartCoroutine(DestroyZombie());
+
+            gameManager.AddPoints(50);
         }
     }
 

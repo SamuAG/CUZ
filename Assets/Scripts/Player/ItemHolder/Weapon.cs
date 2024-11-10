@@ -1,9 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    #region Events
+    public event Action OnStartReloading;
+    public event Action OnStopReloading;
+    public event Action OnShoot;
+    #endregion
+
+
     [SerializeField] private WeaponSO weaponData; // Scriptable Object con los datos del arma
     protected string weaponName;             // Nombre del arma
     protected int maxAmmo;                   // Máxima cantidad de munición disponible (reserva)
@@ -22,10 +30,12 @@ public abstract class Weapon : MonoBehaviour
     private float nextFireTime = 0f;
     public WeaponSO WeaponData { get => weaponData; set => weaponData = value; }
     public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
-    
+
 
     // Método abstracto para disparar (definido en subclases)
-    public abstract void Shoot();
+    public virtual void Shoot() {
+        OnShoot?.Invoke();
+    }
 
 
     protected virtual void Awake()
@@ -45,6 +55,19 @@ public abstract class Weapon : MonoBehaviour
         currentAmmo = maxAmmo - magazineAmmo;
 
         anim = GetComponent<Animator>();
+
+        OnShoot += ReduceAmmo;
+    }
+
+    private void Start()
+    {
+        CanvasManager.Instance.CurrentAmmoTxt.text = "" + CurrentAmmo;
+        CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
     public void StartReload()
@@ -69,7 +92,9 @@ public abstract class Weapon : MonoBehaviour
         currentAmmo -= ammoToReload;
 
         isReloading = false;
-       // Debug.Log("Recarga completa. Munición en cargador: " + magazineAmmo + " / Munición restante: " + currentAmmo);
+        CanvasManager.Instance.CurrentAmmoTxt.text = "" + CurrentAmmo;
+        CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
+        // Debug.Log("Recarga completa. Munición en cargador: " + magazineAmmo + " / Munición restante: " + currentAmmo);
     }
 
     protected bool CanShoot()
@@ -101,8 +126,9 @@ public abstract class Weapon : MonoBehaviour
     #endregion
 
 
-    public void ReduceAmmo()
+    private void ReduceAmmo()
     {
         magazineAmmo--;
+        CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
     }
 }

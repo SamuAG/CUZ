@@ -5,21 +5,20 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(fileName = "GameManagerSO", menuName = "ScriptableObjects/GameManagerSO", order = 1)]
 public class GameManagerSO : ScriptableObject
 {
+    #region Events
+    public event Action<int> OnUpdateRounds;
+    public event Action<int> OnUpdatePoints;
+    #endregion
+
     private PlayerBasics player;
     private bool isPaused = false;
 
     [NonSerialized] private int rounds = 1;
-
-    public event Action<int> OnUpdateRounds;
-
-
-    //Recicaldo de otro proyecto, se podria usar para añadir objetos y udpatear rondas
-    //public event Action<ItemSO> OnNewItem;
-    //public event Action<ItemSO> OnRemoveItem;
-
+    [NonSerialized] private int points = 0;
 
     public PlayerBasics Player { get => player; }
     public int Rounds { get => rounds; }
+    public int Points { get => points; }
     public bool IsPaused { get => isPaused; set => isPaused = value; }
 
     private void OnEnable()
@@ -37,23 +36,14 @@ public class GameManagerSO : ScriptableObject
     public void AddRound(int round)
     {
         Debug.Log("Ronda: "+ Rounds);
-        rounds += round;
+        this.rounds += round;
         OnUpdateRounds?.Invoke(rounds);
         Debug.Log("Pasamos a ronda: " + Rounds);
     }
 
-    /*
-    //Evento para añadir un item
-    public void NewItem(ItemSO itemSO)
+    public void AddPoints(int points)
     {
-        OnNewItem?.Invoke(itemSO);
+        this.points += points;
+        OnUpdatePoints?.Invoke(this.points);
     }
-
-    //Evento para eliminar un item
-    public void RemoveItem(ItemSO itemSO)
-    {
-        OnRemoveItem?.Invoke(itemSO);
-    }
-    */
-
 }

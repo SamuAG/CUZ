@@ -96,8 +96,9 @@ public class Gun : Weapon
         }
 
         DebugLine();
-        ReduceAmmo();
         StartShootCooldown();
+
+        base.Shoot();
     }
 
     public void ReloadAmmo()
