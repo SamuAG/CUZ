@@ -9,6 +9,8 @@ public class InputManagerSO : ScriptableObject
 {
     Inputs inputs;
 
+    public Inputs Inputs { get => inputs; }
+
     public event Action<Vector2> OnMovementStarted;
     public event Action OnMovementCanceled;
     public event Action OnJumpStarted;
@@ -22,6 +24,7 @@ public class InputManagerSO : ScriptableObject
     public event Action OnShootCanceled;
     public event Action OnReloadStarted;
     public event Action OnChangeWeaponStarted;
+    public event Action OnPauseStarted;
 
     private void OnEnable()
     {
@@ -40,6 +43,12 @@ public class InputManagerSO : ScriptableObject
         inputs.Gameplay.Shoot.canceled += ShootCanceled;
         inputs.Gameplay.Reload.started += ReloadStarted;
         inputs.Gameplay.ChangeWeapon.started += ChangeWeaponStarted;
+        inputs.UI.Pause.started += PauseStarted;
+    }
+
+    private void PauseStarted(InputAction.CallbackContext context)
+    {
+        OnPauseStarted?.Invoke();
     }
 
     private void MovementStarted(InputAction.CallbackContext context)

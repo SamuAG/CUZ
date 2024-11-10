@@ -20,6 +20,7 @@ public class FirstPersonControllerRigidbody : MonoBehaviour
     private bool isGrounded;
     private bool isCrouching = false;
     private bool isSprinting = false;
+    [SerializeField] private bool canCrouch = false;
     private float sensitivity = 0.05f;
 
     private float xRotation = 0f;
@@ -140,6 +141,7 @@ public class FirstPersonControllerRigidbody : MonoBehaviour
 
     void Crouch()
     {
+        if (!canCrouch) return;
         hasStoppedCrouching = false;
         isCrouching = true;
         transform.localScale = new Vector3(1, 0.5f, 1);

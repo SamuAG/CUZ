@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Bennelli
   maxAmmo: 20
-  magazineSize: 0
+  magazineSize: 20
   fireRate: 0.1
   reloadTime: 1
   isAutomatic: 1

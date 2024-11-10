@@ -84,6 +84,7 @@ public class WeaponHolder : MonoBehaviour
 
     public void AddWeapon(GameObject weaponPrefab)
     {
+        Debug.Log("aaa");
         // Instanciar el arma y annadirla a la lista de armas
         GameObject newWeapon = Instantiate(weaponPrefab, handTransform.position, handTransform.rotation, handTransform);
         currentWeapons[selectedWeaponIndex].SetActive(false);  

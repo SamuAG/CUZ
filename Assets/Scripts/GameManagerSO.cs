@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerSO : ScriptableObject
 {
     private PlayerBasics player;
+    private bool isPaused = false;
 
     [NonSerialized] private int rounds = 1;
 
@@ -19,6 +20,7 @@ public class GameManagerSO : ScriptableObject
 
     public PlayerBasics Player { get => player; }
     public int Rounds { get => rounds; }
+    public bool IsPaused { get => isPaused; set => isPaused = value; }
 
     private void OnEnable()
     {

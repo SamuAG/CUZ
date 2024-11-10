@@ -8,7 +8,20 @@ public class WallInteractive : MonoBehaviour, IInteract
     [SerializeField] GameManagerSO gM;
     [SerializeField] int price;
 
+    [SerializeField] private Transform weaponDisplay;
+    [SerializeField] private TMPro.TMP_Text weaponName;
+    [SerializeField] private TMPro.TMP_Text weaponPrice;
+
     // TODO: implementar cobrar al jugador cuando interactúe con el objeto
+    private void Start()
+    {
+        // Parte visual, cambia los graficos del arma en display, pone el precio y el nombre
+        weaponDisplay.GetComponent<MeshFilter>().mesh = gunPrefab.GetComponent<MeshFilter>().sharedMesh;
+        weaponDisplay.GetComponent<MeshRenderer>().material = gunPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+        weaponName.text = gunPrefab.GetComponent<Weapon>().WeaponData.weaponName;
+        weaponPrice.text = price.ToString();
+
+    }
 
     public void interact()
     {

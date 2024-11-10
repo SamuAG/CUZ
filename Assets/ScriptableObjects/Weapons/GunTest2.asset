@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a02aa29352d6e8842a61410eb6454917, type: 3}
   m_Name: GunTest2
   m_EditorClassIdentifier: 
-  weaponName: Small Fucking gun
+  weaponName: GunTest2
   maxAmmo: 120
   magazineSize: 20
   fireRate: 10
