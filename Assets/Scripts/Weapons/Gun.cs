@@ -77,7 +77,7 @@ public class Gun : Weapon
 
     public override void Shoot()
     {
-        if (!CanShoot()) { 
+        if (!CanShoot() || isReloading) { 
             //Debug.Log("Can not shoot!");
             return;
         }

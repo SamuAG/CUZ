@@ -29,7 +29,7 @@ public abstract class Weapon : MonoBehaviour
     protected Animator anim;
     protected AudioSource audioSource;
 
-    private bool isReloading = false;
+    protected bool isReloading = false;
     private float nextFireTime = 0f;
     public WeaponSO WeaponData { get => weaponData; set => weaponData = value; }
     public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
