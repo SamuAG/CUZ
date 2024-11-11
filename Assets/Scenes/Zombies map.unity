@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2103966894}
-  m_IndirectSpecularColor: {r: 0.17659304, g: 0.22103679, b: 0.30334574, a: 1}
+  m_IndirectSpecularColor: {r: 0.1765928, g: 0.22103634, b: 0.30334508, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20104,37 +20104,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 511507962}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &525701877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 525701879}
-  m_Layer: 0
-  m_Name: ZombiePool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &525701879
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 525701877}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.793976, y: 4.0426693, z: -7.485484}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &535714421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39197,7 +39166,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1000
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 553d7bc92a7cdfa4892cb7458e03927b, type: 2}
   m_sharedMaterial: {fileID: -5664371928830372802, guid: 553d7bc92a7cdfa4892cb7458e03927b,
@@ -55541,7 +55510,6 @@ SceneRoots:
   - {fileID: 313886611}
   - {fileID: 1838003049}
   - {fileID: 1554468506}
-  - {fileID: 525701879}
   - {fileID: 1604530785}
   - {fileID: 61591570}
   - {fileID: 2141430489}

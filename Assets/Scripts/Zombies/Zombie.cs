@@ -11,7 +11,7 @@ public class Zombie : MonoBehaviour, Damageable
     private float health;
     private bool isDead = false;
     private AudioSource audioSource;
-    private const float soundProbability = 0.2f; 
+    private const float soundProbability = 0.2f;
 
     [SerializeField] private GameManagerSO gameManager;
     [SerializeField] private Transform AttackPoint;
@@ -23,22 +23,31 @@ public class Zombie : MonoBehaviour, Damageable
 
     public float Health { get => health; set => health = value; }
 
-    void Start()
+    void Awake()
     {
-        targetPlayer = gameManager.Player;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        agent.SetDestination(targetPlayer.transform.position);
-
         audioSource = GetComponentInParent<AudioSource>();
-        StartCoroutine(PlaySound());
+    }
+
+    void OnEnable()
+    {
+        ResetZombie();
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     void Update()
     {
         if (isDead) return;
 
-        agent.SetDestination(targetPlayer.transform.position);
+        if (agent.enabled)
+        {
+            agent.SetDestination(targetPlayer.transform.position);
+        }
 
         float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
 
@@ -58,14 +67,12 @@ public class Zombie : MonoBehaviour, Damageable
         }
     }
 
-    // Referenciado en la animación
     private void PlayerNearAfterAttack()
     {
         agent.isStopped = false;
         anim.SetBool("Attacking", false);
     }
 
-    // Referenciado en la animación
     private void Attack()
     {
         Collider[] hitColliders = Physics.OverlapSphere(AttackPoint.position, AttackRadius);
@@ -96,19 +103,18 @@ public class Zombie : MonoBehaviour, Damageable
             ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
             if (spawner != null)
             {
-
                 spawner.DecreaseZombieCount();
             }
-            StartCoroutine(DestroyZombie());
+            StartCoroutine(DeactivateZombie());
 
-            gameManager.AddPoints(50);
+            gameManager.AddPoints(80);
         }
     }
 
-    private IEnumerator DestroyZombie()
+    private IEnumerator DeactivateZombie()
     {
         yield return new WaitForSeconds(2f);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmos()
@@ -120,7 +126,7 @@ public class Zombie : MonoBehaviour, Damageable
     {
         while (!isDead)
         {
-            yield return new WaitForSeconds(3f); 
+            yield return new WaitForSeconds(3f);
 
             if (Random.value < soundProbability)
             {
@@ -128,5 +134,27 @@ public class Zombie : MonoBehaviour, Damageable
                 audioSource.PlayOneShot(zombieSound[randomIndex]);
             }
         }
+    }
+
+    public void ResetZombie()
+    {
+        isDead = false;
+        gameObject.GetComponent<CapsuleCollider>().enabled = true;
+
+        //Nos aseguramos que el zombie esté en el NavMesh
+        if (!agent.isOnNavMesh)
+        {
+            if (NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 1.0f, NavMesh.AllAreas))
+            {
+                transform.position = navMeshHit.position;
+            }
+        }
+
+        agent.enabled = true;
+        agent.isStopped = false;
+        anim.ResetTrigger("IsDead");
+        anim.SetBool("Attacking", false);
+        targetPlayer = gameManager.Player;
+        StartCoroutine(PlaySound());
     }
 }

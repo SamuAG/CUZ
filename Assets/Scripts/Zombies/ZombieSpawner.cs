@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieSpawner : MonoBehaviour
 {
@@ -13,11 +14,22 @@ public class ZombieSpawner : MonoBehaviour
     private int zombiesRemaining = 0;
     private float healthIncrement = 20f;
 
+    private List<GameObject> zombiePool = new List<GameObject>();
+    private int initialPoolSize = 50; 
+
     void Start()
     {
         foreach (Transform child in transform)
         {
             spawnPoints.Add(child);
+        }
+
+        // Creamos los zombies de la pool
+        for (int i = 0; i < initialPoolSize; i++)
+        {
+            GameObject zombie = Instantiate(zombiePrefab);
+            zombie.SetActive(false);
+            zombiePool.Add(zombie);
         }
 
         gM.OnUpdateRounds += StartNewRound;
@@ -51,10 +63,46 @@ public class ZombieSpawner : MonoBehaviour
         );
 
         Vector3 spawnPosition = spawnPoint.position + randomOffset;
-        GameObject zombie = Instantiate(zombiePrefab, spawnPosition, Quaternion.identity);
 
-        Zombie zombieScript = zombie.GetComponent<Zombie>();
-        zombieScript.Health = (100f + (round - 1) * healthIncrement);
+        //Nos aseguremos de que el zombie este siempre spawne en una zona valida si no es viable se elimina el zombie
+        if (NavMesh.SamplePosition(spawnPosition, out NavMeshHit navMeshHit, 1.0f, NavMesh.AllAreas))
+        {
+            spawnPosition = navMeshHit.position;
+        }
+        else
+        {
+            DecreaseZombieCount();
+            return; 
+        }
+
+        GameObject zombie = GetZombieFromPool();
+        if (zombie != null)
+        {
+            zombie.transform.position = spawnPosition;
+            zombie.transform.rotation = Quaternion.identity;
+            zombie.SetActive(true);
+
+            Zombie zombieScript = zombie.GetComponent<Zombie>();
+            zombieScript.Health = (100f + (round - 1) * healthIncrement);
+            zombieScript.ResetZombie(); // Reiniciamos el estado del zombie
+        }
+    }
+
+    private GameObject GetZombieFromPool()
+    {
+        foreach (var zombieInPool in zombiePool)
+        {
+            if (!zombieInPool.activeInHierarchy)
+            {
+                return zombieInPool;
+            }
+        }
+
+        // Opcionalmente, expandimos el pool
+        GameObject newZombie = Instantiate(zombiePrefab);
+        newZombie.SetActive(false);
+        zombiePool.Add(newZombie);
+        return newZombie;
     }
 
     public void DecreaseZombieCount()
@@ -68,7 +116,6 @@ public class ZombieSpawner : MonoBehaviour
         }
     }
 
-    // Limpiamos la suscripción para que no haya problemas
     private void OnDestroy()
     {
         gM.OnUpdateRounds -= StartNewRound;
