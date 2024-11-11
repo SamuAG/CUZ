@@ -16,7 +16,7 @@ MonoBehaviour:
   maxAmmo: 240
   magazineSize: 45
   fireRate: 0.1
-  reloadTime: 1
+  reloadTime: 2.75
   isAutomatic: 1
   damage: 20
   bulletSpeed: 50
