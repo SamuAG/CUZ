@@ -65,7 +65,12 @@ public class PlayerBasics : MonoBehaviour, Damageable
 
     private void Die()
     {
-        Debug.Log("Player has died");
+        Debug.Log("El jugador ha muerto");
+        Camera.main.transform.SetParent(null);
+        gM.GameOver();
+        Destroy(gameObject);
     }
+
+
 
 }

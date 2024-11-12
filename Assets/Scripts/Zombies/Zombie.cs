@@ -7,7 +7,7 @@ public class Zombie : MonoBehaviour, Damageable
     private NavMeshAgent agent;
     private PlayerBasics targetPlayer;
     private Animator anim;
-    private float damage = 10f;
+    private float damage = 25f;
     private float health;
     private bool isDead = false;
     private AudioSource audioSource;
@@ -44,9 +44,13 @@ public class Zombie : MonoBehaviour, Damageable
     {
         if (isDead) return;
 
-        if (agent.enabled)
+        if (agent.enabled && targetPlayer)
         {
             agent.SetDestination(targetPlayer.transform.position);
+        }
+        else
+        {
+            return;
         }
 
         float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);

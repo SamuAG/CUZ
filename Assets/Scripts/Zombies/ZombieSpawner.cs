@@ -112,8 +112,18 @@ public class ZombieSpawner : MonoBehaviour
 
         if (zombiesRemaining <= 0)
         {
-            gM.AddRound(1); // Si no quedan zombies, avanzamos de ronda
+            StartCoroutine(PlayNextRound());
         }
+    }
+
+    private IEnumerator PlayNextRound()
+    {
+        yield return new WaitForSeconds(1f);
+        AudioManager.Instance.PlaySFX("NewRound");
+        yield return new WaitForSeconds(3f);
+        gM.AddRound(1);
+        yield return new WaitForSeconds(1f);
+        AudioManager.Instance.PlaySFX("NextRoundVoice");
     }
 
     private void OnDestroy()

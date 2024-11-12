@@ -8,6 +8,7 @@ public class GameManagerSO : ScriptableObject
     #region Events
     public event Action<int> OnUpdateRounds;
     public event Action<int> OnUpdatePoints;
+    public event Action OnGameOver;
     #endregion
 
     private PlayerBasics player;
@@ -45,5 +46,10 @@ public class GameManagerSO : ScriptableObject
     {
         this.points += points;
         OnUpdatePoints?.Invoke(this.points);
+    }
+
+    public void GameOver()
+    {
+        OnGameOver?.Invoke();
     }
 }

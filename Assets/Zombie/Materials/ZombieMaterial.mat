@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: ZombieMaterial
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 1cef3382fdcf7af4d8520c90e7e23d69, type: 2}
+  m_Parent: {fileID: 2100000, guid: 0490d4197a7b24945bd1ebf8c8a26072, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SPECULAR_SETUP
