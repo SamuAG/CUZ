@@ -205,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunPrefab: {fileID: 1261748888023320, guid: 432643b6e5110004083fdff3e33e490b, type: 3}
+  Graphics: {fileID: 1261748888023320, guid: 432643b6e5110004083fdff3e33e490b, type: 3}
   gM: {fileID: 11400000, guid: 8d70f5c645daef6449c341c57ce6b723, type: 2}
   price: 0
   weaponDisplay: {fileID: 2884923675177927329}

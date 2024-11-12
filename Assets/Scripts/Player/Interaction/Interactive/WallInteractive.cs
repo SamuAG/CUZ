@@ -5,6 +5,7 @@ using UnityEngine;
 public class WallInteractive : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject gunPrefab;
+    [SerializeField] GameObject Graphics;
     [SerializeField] GameManagerSO gM;
     [SerializeField] int price;
 
@@ -16,8 +17,8 @@ public class WallInteractive : MonoBehaviour, IInteract
     private void Start()
     {
         // Parte visual, cambia los graficos del arma en display, pone el precio y el nombre
-        weaponDisplay.GetComponent<MeshFilter>().mesh = gunPrefab.GetComponent<MeshFilter>().sharedMesh;
-        weaponDisplay.GetComponent<MeshRenderer>().material = gunPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+        weaponDisplay.GetComponent<MeshFilter>().mesh = Graphics.GetComponent<MeshFilter>().sharedMesh;
+        weaponDisplay.GetComponent<MeshRenderer>().material = Graphics.GetComponent<MeshRenderer>().sharedMaterial;
         weaponName.text = gunPrefab.GetComponent<Weapon>().WeaponData.weaponName;
         weaponPrice.text = price.ToString();
 

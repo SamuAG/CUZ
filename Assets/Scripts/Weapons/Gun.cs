@@ -38,7 +38,9 @@ public class Gun : Weapon
     }
     private void OnEnable()
     {
-        if(isAutomatic)
+        
+
+        if (isAutomatic)
         {
             input.OnShootStarted += ShootAuto;
             input.OnShootCanceled += ShootAutoCancel;
@@ -51,8 +53,9 @@ public class Gun : Weapon
         input.OnReloadStarted += StartReload;
     }
 
-    private void OnDisable()
+    override protected void OnDisable()
     {
+        base.OnDisable();
         if (isAutomatic)
         {
             input.OnShootStarted -= ShootAuto;
@@ -84,7 +87,7 @@ public class Gun : Weapon
 
         // Disparar una bala
         //Debug.Log($"{weaponName} disparando. Munición en cargador restante: {magazineAmmo}");
-        anim.SetTrigger("shoot");
+        anim?.SetTrigger("shoot");
         audioSource.Play();
         shootingParticles.Play();
         // Does the ray intersect any objects excluding the player layer
@@ -105,7 +108,7 @@ public class Gun : Weapon
 
     public void ReloadAmmo()
     {
-        anim.SetTrigger("reload");
+        anim?.SetTrigger("reload");
     }
 
     private void DebugLine()

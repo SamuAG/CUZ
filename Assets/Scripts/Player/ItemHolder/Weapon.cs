@@ -26,7 +26,7 @@ public abstract class Weapon : MonoBehaviour
     protected float damage;                  // Daño del arma
     protected float bulletSpeed;             // Velocidad de las balas
     protected bool _inCooldown = false;
-    protected Animator anim;
+    [SerializeField] protected Animator anim;
     protected AudioSource audioSource;
 
     protected bool isReloading = false;
@@ -57,7 +57,7 @@ public abstract class Weapon : MonoBehaviour
         magazineAmmo = magazineSize;
         currentAmmo = maxAmmo - magazineAmmo;
 
-        anim = GetComponent<Animator>();
+        if(anim == null) anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         OnShoot += ReduceAmmo;
     }
@@ -68,15 +68,25 @@ public abstract class Weapon : MonoBehaviour
         CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
     }
 
-    private void OnDisable()
+
+    virtual protected void OnDisable()
     {
-        
+        Debug.Log("Weapon disabled, stopping coroutines.");
+        StopAllCoroutines();
+        isReloading = false;
+        if (_cooldownRoutine != null)
+        {
+            StopCoroutine(_cooldownRoutine);
+            _inCooldown = false;
+            _cooldownRoutine = null;
+        }
     }
+
 
     public void StartReload()
     {
         if (isReloading || magazineAmmo == magazineSize || currentAmmo <= 0) return;
-        StartCoroutine(Reload());
+        if(gameObject.activeSelf) StartCoroutine(Reload());
     }
 
     private IEnumerator Reload()
@@ -134,4 +144,7 @@ public abstract class Weapon : MonoBehaviour
         magazineAmmo--;
         CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
     }
+
+    
+
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4804547747435796949}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8754187488235621398}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: M4_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,6 +186,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: d9e37e39c55f60242a23011b47f429ab, type: 2}
   magazineAmmo: 0
   currentAmmo: 0
+  shootingParticles: {fileID: 0}
   firePoint: {fileID: 4804547747435796949}
   bulletPrefab: {fileID: 2634007859309474445, guid: ce338a4b51916c24395ce11a6a3378fa,
     type: 3}
