@@ -14,9 +14,12 @@ public class Zombie : MonoBehaviour, Damageable
     private const float soundProbability = 0.2f;
 
     [SerializeField] private GameManagerSO gameManager;
-    [SerializeField] private Transform AttackPoint;
-    [SerializeField] private float AttackRadius;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRadius;
     [SerializeField] private float attackDistance = 2f;
+    [SerializeField] private GameObject maxAmmoPrefab;
+    [SerializeField] private GameObject instaKillPrefab;
+
 
     [SerializeField] private AudioClip[] zombieSound;
     [SerializeField] private AudioClip[] zombieAttack;
@@ -79,7 +82,7 @@ public class Zombie : MonoBehaviour, Damageable
 
     private void Attack()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(AttackPoint.position, AttackRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(attackPoint.position, attackRadius);
         foreach (var collider in hitColliders)
         {
             if (collider.TryGetComponent(out Damageable damageable) && collider.CompareTag("Player"))
@@ -104,6 +107,23 @@ public class Zombie : MonoBehaviour, Damageable
             agent.velocity = Vector3.zero;
             agent.enabled = false;
             anim.SetTrigger("IsDead");
+
+            //PowerUp
+            if (Random.value <= 0.1f)
+            {
+                GameObject powerUp;
+                if (Random.value < 0.5f)
+                {
+                    powerUp = maxAmmoPrefab;
+                    Instantiate(powerUp, transform.position + Vector3.up * 1.2f, Quaternion.identity);
+                }
+                else
+                {
+                    powerUp = instaKillPrefab;
+                    Instantiate(powerUp, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+                }
+            }
+
             ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
             if (spawner != null)
             {
@@ -123,7 +143,7 @@ public class Zombie : MonoBehaviour, Damageable
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(AttackPoint.position, AttackRadius);
+        Gizmos.DrawSphere(attackPoint.position, attackRadius);
     }
 
     private IEnumerator PlaySound()

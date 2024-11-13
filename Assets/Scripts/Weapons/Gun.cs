@@ -16,6 +16,8 @@ public class Gun : Weapon
     private LineRenderer _lineRenderer = null;
     [SerializeField]
     private bool _debugMode = false;
+    [SerializeField]
+    private LayerMask layerMask;
 
     protected override void Awake()
     {
@@ -91,7 +93,7 @@ public class Gun : Weapon
         audioSource.Play();
         shootingParticles.Play();
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity)) {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, layerMask)) {
 
             if (hit.transform.gameObject.CompareTag("Zombie"))
             {

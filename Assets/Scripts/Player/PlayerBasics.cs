@@ -14,7 +14,8 @@ public class PlayerBasics : MonoBehaviour, Damageable
 
     [SerializeField] Image damagedFrame;
     [SerializeField] GameManagerSO gM;
-    
+    [SerializeField] InputManagerSO input;
+
     void Start()
     {
         currentHealth = maxHealth; 
@@ -65,9 +66,10 @@ public class PlayerBasics : MonoBehaviour, Damageable
 
     private void Die()
     {
-        Debug.Log("El jugador ha muerto");
+        input.Inputs.Gameplay.Disable();
         Camera.main.transform.SetParent(null);
         gM.GameOver();
+        AudioManager.Instance.PlaySFX("GameOver");
         Destroy(gameObject);
     }
 

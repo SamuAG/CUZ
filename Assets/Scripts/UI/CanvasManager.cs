@@ -37,6 +37,7 @@ public class CanvasManager : MonoBehaviour
 
     [SerializeField] private GameManagerSO gM;
     [SerializeField] private GameObject mainInterface;
+    [SerializeField] private GameObject GameOver;
     [SerializeField] private TMP_Text grenadeTxt, magazineAmmoTxt, currentAmmoTxt, pointsTxt, roundTxt;
 
     public TMP_Text GrenadeTMP { get =>  grenadeTxt; }
@@ -69,6 +70,7 @@ public class CanvasManager : MonoBehaviour
                 child.gameObject.SetActive(false);
             }
         }
+        GameOver.SetActive(true);
     }
 
     private IEnumerator WaitAndLoadScene()

@@ -550,11 +550,9 @@ MonoBehaviour:
   input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
   _lineRenderer: {fileID: 6365350260598055081}
   _debugMode: 0
-  _transformList:
-  - {fileID: 1256411750290528931}
-  - {fileID: 367469094285155881}
-  - {fileID: 3967900834802363401}
-  - {fileID: 4508685869735940552}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!82 &3935181529465303898
 AudioSource:
   m_ObjectHideFlags: 0

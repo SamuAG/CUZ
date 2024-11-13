@@ -5060,6 +5060,9 @@ MonoBehaviour:
   input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
   _lineRenderer: {fileID: 4785649375551356793}
   _debugMode: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!82 &4202131906284806983
 AudioSource:
   m_ObjectHideFlags: 0
