@@ -19615,7 +19615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseWeaponsPrefabs:
-  - {fileID: 4484216506960360501, guid: 5aca26e1aedb93649885d78b4b410ec3, type: 3}
+  - {fileID: 4433298034212422822, guid: 1fbf1dfe1c37d514cabb1d68cecac4cc, type: 3}
   handTransform: {fileID: 374803422}
   selectedWeaponIndex: 0
   grenadeCount: 3
