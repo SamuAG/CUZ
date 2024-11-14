@@ -17,6 +17,6 @@ MonoBehaviour:
   magazineSize: 12
   fireRate: 0.1
   reloadTime: 3.5
-  isAutomatic: 1
+  isAutomatic: 0
   damage: 15
   bulletSpeed: 50
