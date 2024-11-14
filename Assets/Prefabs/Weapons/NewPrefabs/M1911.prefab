@@ -4980,10 +4980,10 @@ MonoBehaviour:
     type: 3}
   input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
   _lineRenderer: {fileID: 3345143727514793712}
-  _debugMode: 1
+  _debugMode: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 0
 --- !u!120 &3345143727514793712
 LineRenderer:
   serializedVersion: 2

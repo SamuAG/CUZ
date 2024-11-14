@@ -19771,7 +19771,7 @@ MonoBehaviour:
   damagedFrame: {fileID: 2102964033}
   gM: {fileID: 11400000, guid: 8d70f5c645daef6449c341c57ce6b723, type: 2}
   input: {fileID: 11400000, guid: d405df81f7374ee429bb7233e2164349, type: 2}
-  instaKillUI: {fileID: 0}
+  instaKillUI: {fileID: 1404670559}
 --- !u!1 &1843685942
 GameObject:
   m_ObjectHideFlags: 0
