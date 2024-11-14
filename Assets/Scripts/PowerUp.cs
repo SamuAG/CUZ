@@ -3,6 +3,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     [SerializeField] private PowerUpType powerUpType;
+    [SerializeField] private GameManagerSO gM;
 
     private enum PowerUpType { MaxAmmo, InstaKill }
 
@@ -30,6 +31,13 @@ public class PowerUp : MonoBehaviour
 
     private void MaxAmmo()
     {
+        WeaponHolder wh = gM.Player.GetComponent<WeaponHolder>();
+        for (int i = 0; i < wh.CurrentWeapons.Count; ++i)
+        {
+            Weapon w = wh.CurrentWeapons[i].GetComponent<Weapon>();
+            wh.RefillAmmo(w.WeaponData.weaponName);
+        }
+
         Debug.Log("Max Ammo activated!");
     }
 

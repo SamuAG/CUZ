@@ -5753,6 +5753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpType: 0
+  gM: {fileID: 11400000, guid: 8d70f5c645daef6449c341c57ce6b723, type: 2}
 --- !u!1 &8110700141533134120
 GameObject:
   m_ObjectHideFlags: 0
