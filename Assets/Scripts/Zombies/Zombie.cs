@@ -99,7 +99,7 @@ public class Zombie : MonoBehaviour, Damageable
         health -= damage;
         gameManager.AddPoints(10);
 
-        if (health <= 0)
+        if (health <= 0 || gameManager.Player.InstaKillEnabled)
         {
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             isDead = true;

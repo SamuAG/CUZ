@@ -4,6 +4,7 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] private PowerUpType powerUpType;
     [SerializeField] private GameManagerSO gM;
+    [SerializeField] private float seconds;
 
     private enum PowerUpType { MaxAmmo, InstaKill }
 
@@ -43,6 +44,6 @@ public class PowerUp : MonoBehaviour
 
     private void InstaKill()
     {
-        Debug.Log("Insta Kill activated!");
+        gM.Player.StartInstaKill(seconds);
     }
 }

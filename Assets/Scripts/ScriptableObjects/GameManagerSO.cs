@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+
 using UnityEngine;
+
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "GameManagerSO", menuName = "ScriptableObjects/GameManagerSO", order = 1)]
@@ -14,6 +18,7 @@ public class GameManagerSO : ScriptableObject
 
     private PlayerBasics player;
     private bool isPaused = false;
+    private bool instaKillEnabled = false;
 
     [NonSerialized] private int rounds = 1;
     [NonSerialized] private int points = 0;
@@ -58,4 +63,8 @@ public class GameManagerSO : ScriptableObject
     {
         OnWinGame?.Invoke();
     }
+
+
+    
+
 }
