@@ -29,10 +29,11 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Animator anim;
     protected AudioSource audioSource;
 
-    protected bool isReloading = false;
+    private bool isReloading = false;
     private float nextFireTime = 0f;
     public WeaponSO WeaponData { get => weaponData; set => weaponData = value; }
     public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
+    public bool IsReloading { get => isReloading; set => isReloading = value; }
 
 
     // Método abstracto para disparar (definido en subclases)
@@ -73,7 +74,7 @@ public abstract class Weapon : MonoBehaviour
     {
         Debug.Log("Weapon disabled, stopping coroutines.");
         StopAllCoroutines();
-        isReloading = false;
+        IsReloading = false;
         if (_cooldownRoutine != null)
         {
             StopCoroutine(_cooldownRoutine);
@@ -85,13 +86,13 @@ public abstract class Weapon : MonoBehaviour
 
     public void StartReload()
     {
-        if (isReloading || magazineAmmo == magazineSize || currentAmmo <= 0) return;
+        if (IsReloading || magazineAmmo == magazineSize || currentAmmo <= 0) return;
         if(gameObject.activeSelf) StartCoroutine(Reload());
     }
 
     private IEnumerator Reload()
     {
-        isReloading = true;
+        IsReloading = true;
         //Debug.Log("Recargando...");
         anim.SetTrigger("reload");
         yield return new WaitForSeconds(reloadTime);
@@ -104,7 +105,7 @@ public abstract class Weapon : MonoBehaviour
         magazineAmmo += ammoToReload;
         currentAmmo -= ammoToReload;
 
-        isReloading = false;
+        IsReloading = false;
         CanvasManager.Instance.CurrentAmmoTxt.text = "" + CurrentAmmo;
         CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
         // Debug.Log("Recarga completa. Munición en cargador: " + magazineAmmo + " / Munición restante: " + currentAmmo);
@@ -112,7 +113,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected bool CanShoot()
     {
-        return !_inCooldown && magazineAmmo > 0 && !isReloading;
+        return !_inCooldown && magazineAmmo > 0 && !IsReloading;
     }
 
     #region Cooldown

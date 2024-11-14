@@ -4983,7 +4983,7 @@ MonoBehaviour:
   _debugMode: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1025
 --- !u!120 &3345143727514793712
 LineRenderer:
   serializedVersion: 2

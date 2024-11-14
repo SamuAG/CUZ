@@ -227,7 +227,7 @@ MonoBehaviour:
   _debugMode: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1025
 --- !u!82 &2533587229162453456
 AudioSource:
   m_ObjectHideFlags: 0

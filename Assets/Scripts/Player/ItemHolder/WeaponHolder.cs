@@ -14,7 +14,7 @@ public class WeaponHolder : MonoBehaviour
 
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private Transform grenadePoint;
-    private List<GameObject> currentWeapons = new List<GameObject>();  // Armas equipadas
+    private readonly List<GameObject> currentWeapons = new ();  // Armas equipadas
 
     public List<GameObject> CurrentWeapons { get => currentWeapons; }
 
@@ -66,20 +66,23 @@ public class WeaponHolder : MonoBehaviour
     void EquipWeapon(int index)
     {
         // Desactivar todas las armas
-        for (int i = 0; i < currentWeapons.Count; i++)
+        if (!currentWeapons[index].GetComponent<Weapon>().IsReloading)
         {
-            currentWeapons[i].SetActive(false);
-        }
+            for (int i = 0; i < currentWeapons.Count; i++)
+            {
+                currentWeapons[i].SetActive(false);
+            }
 
-        // Activar la nueva arma seleccionada
-        if (currentWeapons[index] != null)
-        {
-            currentWeapons[index].SetActive(true);
-            //Debug.Log($"Arma equipada: {currentWeapons[index].name}");
-        }
-        else
-        {
-            //Debug.LogError("No se encontró el arma seleccionada.");
+            // Activar la nueva arma seleccionada
+            if (currentWeapons[index] != null)
+            {
+                currentWeapons[index].SetActive(true);
+                //Debug.Log($"Arma equipada: {currentWeapons[index].name}");
+            }
+            else
+            {
+                //Debug.LogError("No se encontró el arma seleccionada.");
+            }
         }
     }
 
