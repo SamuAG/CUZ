@@ -144,7 +144,4 @@ public abstract class Weapon : MonoBehaviour
         magazineAmmo--;
         CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
     }
-
-    
-
 }

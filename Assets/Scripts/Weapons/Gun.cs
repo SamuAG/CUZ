@@ -29,6 +29,10 @@ public class Gun : Weapon
 
     private void Update()
     {
+        // Actualizar UI
+        CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
+        CanvasManager.Instance.CurrentAmmoTxt.text = "" + CurrentAmmo;
+
         if (isAutomatic)
         {
             if (isShooting)
@@ -40,7 +44,8 @@ public class Gun : Weapon
     }
     private void OnEnable()
     {
-        
+        CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
+        CanvasManager.Instance.CurrentAmmoTxt.text = "" + CurrentAmmo;
 
         if (isAutomatic)
         {
@@ -110,6 +115,8 @@ public class Gun : Weapon
 
     public void ReloadAmmo()
     {
+        CanvasManager.Instance.MagazineAmmoTxt.text = "" + magazineAmmo;
+        CanvasManager.Instance.CurrentAmmoTxt.text = "" + CurrentAmmo;
         anim?.SetTrigger("reload");
     }
 
