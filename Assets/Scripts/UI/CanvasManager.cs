@@ -38,6 +38,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameManagerSO gM;
     [SerializeField] private GameObject mainInterface;
     [SerializeField] private GameObject GameOver;
+    [SerializeField] private GameObject WinGame;
     [SerializeField] private TMP_Text grenadeTxt, magazineAmmoTxt, currentAmmoTxt, pointsTxt, roundTxt;
 
     public TMP_Text GrenadeTMP { get =>  grenadeTxt; }
@@ -53,11 +54,20 @@ public class CanvasManager : MonoBehaviour
         gM.OnUpdateRounds += (value) => roundTxt.text = "" + value;
         gM.OnUpdatePoints += (value) => pointsTxt.text = "" + value;
         gM.OnGameOver += HandleGameOver;
+        gM.OnWinGame += HandleWinGame;
     }
 
     private void HandleGameOver()
     {
         HideHUD();
+        GameOver.SetActive(true);
+        StartCoroutine(WaitAndLoadScene());
+    }
+
+    private void HandleWinGame()
+    {
+        HideHUD();
+        WinGame.SetActive(true);
         StartCoroutine(WaitAndLoadScene());
     }
 
@@ -69,8 +79,7 @@ public class CanvasManager : MonoBehaviour
             {
                 child.gameObject.SetActive(false);
             }
-        }
-        GameOver.SetActive(true);
+        } 
     }
 
     private IEnumerator WaitAndLoadScene()
@@ -78,11 +87,4 @@ public class CanvasManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(0);
     }
-
-    private void Update()
-    {
-
-    }
-
-
 }

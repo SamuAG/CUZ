@@ -1,35 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] InputManagerSO input;
     [SerializeField] Transform cam;
+    [SerializeField] GameObject interactUI;
     [SerializeField] float range = 5f;
     [SerializeField] LayerMask layerMask;
+
+    private IInteract target = null;
+
     private void OnEnable()
     {
-        input.OnReloadStarted += TryInteract;
+        input.OnInteractStarted += TryInteract;
     }
 
     private void OnDisable()
     {
-        input.OnReloadStarted -= TryInteract;
+        input.OnInteractStarted -= TryInteract;
+    }
+
+    private void Update()
+    {
+        if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hit, range, layerMask))
+        {
+            target = hit.collider.gameObject.GetComponent<IInteract>();
+            if (target != null)
+                interactUI.SetActive(true);
+            else
+                interactUI.SetActive(false);
+        }
+        else
+        {
+            interactUI.SetActive(false);
+            target = null;
+        }
     }
 
     private void TryInteract()
     {
-        // Raycast para detectar objetos interactuables desde la cámara
-        RaycastHit hit;
-        if (Physics.Raycast(cam.position, cam.forward, out hit, range, layerMask))
-        {
-            Debug.Log(hit.collider.gameObject.name);
-            IInteract target;
-            if (hit.collider.gameObject.TryGetComponent<IInteract>(out target))
-            {
-                target.interact();
-            }
-        }
+        if(interactUI.activeSelf)
+            target.interact();
     }
 }

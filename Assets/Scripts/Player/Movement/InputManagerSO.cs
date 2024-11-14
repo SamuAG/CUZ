@@ -24,6 +24,7 @@ public class InputManagerSO : ScriptableObject
     public event Action OnShootCanceled;
     public event Action OnReloadStarted;
     public event Action OnChangeWeaponStarted;
+    public event Action OnInteractStarted;
     public event Action OnPauseStarted;
 
     private void OnEnable()
@@ -43,6 +44,7 @@ public class InputManagerSO : ScriptableObject
         inputs.Gameplay.Shoot.canceled += ShootCanceled;
         inputs.Gameplay.Reload.started += ReloadStarted;
         inputs.Gameplay.ChangeWeapon.started += ChangeWeaponStarted;
+        inputs.Gameplay.Interact.started += InteractStarted;
         inputs.UI.Pause.started += PauseStarted;
     }
 
@@ -113,5 +115,10 @@ public class InputManagerSO : ScriptableObject
     private void ChangeWeaponStarted(InputAction.CallbackContext context)
     {
         OnChangeWeaponStarted?.Invoke();
+    }
+
+    private void InteractStarted (InputAction.CallbackContext context)
+    {
+        OnInteractStarted?.Invoke();
     }
 }

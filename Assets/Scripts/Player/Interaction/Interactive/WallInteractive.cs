@@ -26,6 +26,9 @@ public class WallInteractive : MonoBehaviour, IInteract
 
     public void interact()
     {
+        if (gM.Points < price)
+            return;
+
         WeaponHolder weaponHolder = gM.Player.GetComponent<WeaponHolder>();
         string weaponName = gunPrefab.GetComponent<Weapon>().WeaponData.weaponName;
 
@@ -36,18 +39,21 @@ public class WallInteractive : MonoBehaviour, IInteract
         {
             // Si no tiene el arma y hay espacio, añadirla
             weaponHolder.AddWeapon(gunPrefab);
+            gM.AddPoints(-price);
         }
         else if (alreadyHasWeapon)
         {
             // Si ya tiene el arma, comprar munición
             Debug.Log("Ya tienes esta arma, comprando munición...");
             weaponHolder.RefillAmmo(weaponName);
+            gM.AddPoints(-price);
             // Aquí puedes añadir lógica para aumentar la munición
         }
         else if (weaponHolder.CurrentWeapons.Count == 2)
         {
             // Si el jugador ya tiene 2 armas, intercambiar
             weaponHolder.ExchangeWeapon(gunPrefab);
+            gM.AddPoints(-price);
         }
     }
 }
