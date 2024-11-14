@@ -90,6 +90,11 @@ public abstract class Weapon : MonoBehaviour
         if(gameObject.activeSelf) StartCoroutine(Reload());
     }
 
+    public void ForceReload()
+    {
+        if (gameObject.activeSelf) StartCoroutine(Reload());
+    }
+
     private IEnumerator Reload()
     {
         IsReloading = true;

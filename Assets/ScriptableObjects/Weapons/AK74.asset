@@ -18,5 +18,5 @@ MonoBehaviour:
   fireRate: 0.1
   reloadTime: 3.5
   isAutomatic: 1
-  damage: 30
+  damage: 40
   bulletSpeed: 50

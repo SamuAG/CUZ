@@ -102,6 +102,8 @@ MonoBehaviour:
   powerUpType: 1
   gM: {fileID: 11400000, guid: 8d70f5c645daef6449c341c57ce6b723, type: 2}
   seconds: 20
+  rotationSpeed: 100
+  visualModel: {fileID: 3649952196347586464}
 --- !u!1 &1912713151594645197
 GameObject:
   m_ObjectHideFlags: 0

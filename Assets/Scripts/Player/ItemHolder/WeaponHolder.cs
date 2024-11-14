@@ -139,14 +139,16 @@ public class WeaponHolder : MonoBehaviour
         return false;
     }
 
-    public void RefillAmmo(string weaponName)
+    public void RefillAmmo(string weaponName, bool forceReload)
     {
         foreach (GameObject weapon in currentWeapons)
         {
             Weapon weaponScript = weapon.GetComponent<Weapon>();
             if (weaponScript.WeaponData.weaponName == weaponName)
             {
-                weapon.GetComponent<Gun>().ReloadAmmo();
+                if (forceReload) {
+                    weapon.GetComponent<Gun>().ForceReload();
+                } 
                 weaponScript.CurrentAmmo = weaponScript.WeaponData.maxAmmo;
             }
         }
@@ -161,4 +163,18 @@ public class WeaponHolder : MonoBehaviour
             CanvasManager.Instance.GrenadeTMP.text = "" + grenadeCount;
         }
     }
+
+    public bool IsAmmoFull(string weaponName)
+    {
+        foreach (GameObject weapon in currentWeapons)
+        {
+            Weapon weaponScript = weapon.GetComponent<Weapon>();
+            if (weaponScript.WeaponData.weaponName == weaponName)
+            {
+                return weaponScript.CurrentAmmo == weaponScript.WeaponData.maxAmmo;
+            }
+        }
+        return false;
+    }
+
 }

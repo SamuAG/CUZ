@@ -109,7 +109,7 @@ public class Zombie : MonoBehaviour, Damageable
             anim.SetTrigger("IsDead");
 
             //PowerUp
-            if (Random.value <= 0.1f)
+            if (Random.value <= 0.9f)
             {
                 GameObject powerUp;
                 if (Random.value < 0.5f)
