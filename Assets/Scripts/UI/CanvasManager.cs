@@ -36,12 +36,12 @@ public class CanvasManager : MonoBehaviour
     #endregion
 
     [SerializeField] private GameManagerSO gM;
+    [SerializeField] private InputManagerSO input;
     [SerializeField] private GameObject mainInterface;
     [SerializeField] private GameObject GameOver;
     [SerializeField] private GameObject WinGame;
-    [SerializeField] private TMP_Text grenadeTxt, magazineAmmoTxt, currentAmmoTxt, pointsTxt, roundTxt;
+    [SerializeField] private TMP_Text magazineAmmoTxt, currentAmmoTxt, pointsTxt, roundTxt;
 
-    public TMP_Text GrenadeTMP { get =>  grenadeTxt; }
     public TMP_Text MagazineAmmoTxt { get => magazineAmmoTxt; }
     public TMP_Text CurrentAmmoTxt { get => currentAmmoTxt; }
     public TMP_Text PointsTxt { get => PointsTxt; }
@@ -85,6 +85,7 @@ public class CanvasManager : MonoBehaviour
     private IEnumerator WaitAndLoadScene()
     {
         yield return new WaitForSeconds(5f);
+        input.Inputs.Gameplay.Enable();
         SceneManager.LoadScene(0);
     }
 }

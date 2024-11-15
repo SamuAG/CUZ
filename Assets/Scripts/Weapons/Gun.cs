@@ -99,12 +99,9 @@ public class Gun : Weapon
         shootingParticles.Play();
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, layerMask)) {
-
-            if (hit.transform.gameObject.CompareTag("Zombie"))
-            {
-                if (hit.transform.TryGetComponent(out Zombie zombie))
-                    zombie.ApplyDamage(damage);
-            }     
+ 
+            if (hit.transform.TryGetComponent(out ZombiePart zombiePart))
+                zombiePart.Hit(damage);                   
         }
 
         DebugLine();

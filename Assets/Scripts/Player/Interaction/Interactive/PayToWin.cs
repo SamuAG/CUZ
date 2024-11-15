@@ -20,7 +20,7 @@ public class PayToWin : MonoBehaviour, IInteract
     {
         if (gM.Points < price)
             return;
-
+        AudioManager.Instance.PlaySFX("YouWin");
         gM.WinGame();
     }
 }

@@ -14,6 +14,7 @@ public class GameManagerSO : ScriptableObject
     public event Action<int> OnUpdatePoints;
     public event Action OnGameOver;
     public event Action OnWinGame;
+    public event Action OnStopZombies;
     #endregion
 
     private PlayerBasics player;
@@ -42,10 +43,8 @@ public class GameManagerSO : ScriptableObject
 
     public void AddRound(int round)
     {
-        Debug.Log("Ronda: "+ Rounds);
         this.rounds += round;
         OnUpdateRounds?.Invoke(rounds);
-        Debug.Log("Pasamos a ronda: " + Rounds);
     }
 
     public void AddPoints(int points)
@@ -62,9 +61,10 @@ public class GameManagerSO : ScriptableObject
     public void WinGame()
     {
         OnWinGame?.Invoke();
+        OnStopZombies?.Invoke();
     }
 
 
-    
+
 
 }

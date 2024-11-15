@@ -96,7 +96,21 @@ public class PlayerBasics : MonoBehaviour, Damageable
     {
         instaKillEnabled = true;
         instaKillUI.SetActive(true);
-        yield return new WaitForSeconds(secs);
+
+        float blinkStartTime = secs - 5f;
+        float powerUpTime = 0f;
+
+        while (powerUpTime < secs)
+        {
+            if (powerUpTime >= blinkStartTime)
+            {
+                instaKillUI.SetActive((Mathf.FloorToInt((powerUpTime - blinkStartTime) * 5f) % 2) == 0);
+            }
+
+            powerUpTime += Time.deltaTime;
+            yield return null;
+        }
+
         instaKillEnabled = false;
         instaKillUI.SetActive(false);
     }

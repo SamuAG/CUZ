@@ -12,53 +12,56 @@ public class Zombie : MonoBehaviour, Damageable
     private bool isDead = false;
     private AudioSource audioSource;
     private const float soundProbability = 0.2f;
+    private Rigidbody[] bones;
+    private Collider[] bonesColliders;
+    private float defaultSpeed;
 
     [SerializeField] private GameManagerSO gameManager;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRadius;
-    [SerializeField] private float attackDistance = 2f;
     [SerializeField] private GameObject maxAmmoPrefab;
     [SerializeField] private GameObject instaKillPrefab;
-
 
     [SerializeField] private AudioClip[] zombieSound;
     [SerializeField] private AudioClip[] zombieAttack;
 
     public float Health { get => health; set => health = value; }
+    public float DefaultSpeed { get => defaultSpeed; set => defaultSpeed = value; }
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         audioSource = GetComponentInParent<AudioSource>();
+        bones = GetComponentsInChildren<Rigidbody>();
+        bonesColliders = GetComponentsInChildren<Collider>();
+
+        defaultSpeed = agent.speed;
+        foreach (Rigidbody rigidbody in bones)
+        {
+            rigidbody.isKinematic = true;
+        }
     }
 
     void OnEnable()
     {
         ResetZombie();
+        gameManager.OnStopZombies += StopFollow;
     }
 
     void OnDisable()
     {
         StopAllCoroutines();
+        gameManager.OnStopZombies -= StopFollow;
     }
 
     void Update()
     {
-        if (isDead) return;
+        if (isDead || !agent.enabled || !targetPlayer) return;
 
-        if (agent.enabled && targetPlayer)
-        {
-            agent.SetDestination(targetPlayer.transform.position);
-        }
-        else
-        {
-            return;
-        }
+        agent.SetDestination(targetPlayer.transform.position);
 
-        float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
-
-        if (distanceToPlayer <= attackDistance && health > 0)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && health > 0)
         {
             Vector3 targetLocation = (targetPlayer.transform.position - transform.position).normalized;
             targetLocation.y = 0;
@@ -74,12 +77,14 @@ public class Zombie : MonoBehaviour, Damageable
         }
     }
 
+    // Llamado desde la animación
     private void PlayerNearAfterAttack()
     {
         agent.isStopped = false;
         anim.SetBool("Attacking", false);
     }
 
+    // Llamado desde la animación
     private void Attack()
     {
         Collider[] hitColliders = Physics.OverlapSphere(attackPoint.position, attackRadius);
@@ -101,39 +106,57 @@ public class Zombie : MonoBehaviour, Damageable
 
         if (health <= 0 || gameManager.Player.InstaKillEnabled)
         {
-            gameObject.GetComponent<CapsuleCollider>().enabled = false;
-            isDead = true;
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            agent.enabled = false;
-            anim.SetTrigger("IsDead");
-
-            //PowerUp
-            if (Random.value <= 0.9f)
-            {
-                GameObject powerUp;
-                if (Random.value < 0.5f)
-                {
-                    powerUp = maxAmmoPrefab;
-                    Instantiate(powerUp, transform.position + Vector3.up * 1.2f, Quaternion.identity);
-                }
-                else
-                {
-                    powerUp = instaKillPrefab;
-                    Instantiate(powerUp, transform.position + Vector3.up * 1.5f, Quaternion.identity);
-                }
-            }
-
-            ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
-            if (spawner != null)
-            {
-                spawner.DecreaseZombieCount();
-            }
-            StartCoroutine(DeactivateZombie());
-
-            gameManager.AddPoints(80);
+            ZombieDie();
         }
     }
+
+    public void SetSpeed(float speed)
+    {
+        if (agent != null)
+        {
+            agent.speed = speed;
+        }
+    }
+
+    private void ZombieDie()
+    {
+        isDead = true;
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        agent.enabled = false;
+        anim.SetTrigger("IsDead");
+
+        foreach (var collider in bonesColliders)
+        {
+            collider.enabled = false;
+        }
+
+        // PowerUp
+        if (Random.value <= 0.05f)
+        {
+            GameObject powerUp;
+            if (Random.value < 0.5f)
+            {
+                powerUp = maxAmmoPrefab;
+                Instantiate(powerUp, transform.position + Vector3.up * 1.2f, Quaternion.identity);
+            }
+            else
+            {
+                powerUp = instaKillPrefab;
+                Instantiate(powerUp, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+            }
+        }
+
+        ZombieSpawner spawner = FindObjectOfType<ZombieSpawner>();
+        if (spawner != null)
+        {
+            spawner.DecreaseZombieCount();
+        }
+        StartCoroutine(DeactivateZombie());
+
+        gameManager.AddPoints(80);
+    }
+
 
     private IEnumerator DeactivateZombie()
     {
@@ -163,9 +186,18 @@ public class Zombie : MonoBehaviour, Damageable
     public void ResetZombie()
     {
         isDead = false;
-        gameObject.GetComponent<CapsuleCollider>().enabled = true;
+        agent.speed = defaultSpeed;
+        foreach (var collider in bonesColliders)
+        {
+            collider.enabled = true;
+        }
 
-        //Nos aseguramos que el zombie esté en el NavMesh
+        foreach (var rb in bones)
+        {
+            rb.isKinematic = true;
+        }
+
+        // Nos aseguramos de que el zombi este en el NavMesh
         if (!agent.isOnNavMesh)
         {
             if (NavMesh.SamplePosition(transform.position, out NavMeshHit navMeshHit, 1.0f, NavMesh.AllAreas))
@@ -180,5 +212,13 @@ public class Zombie : MonoBehaviour, Damageable
         anim.SetBool("Attacking", false);
         targetPlayer = gameManager.Player;
         StartCoroutine(PlaySound());
+    }
+
+    private void StopFollow()
+    {
+        agent.isStopped = true;   
+        targetPlayer = null;      
+        anim.SetBool("Attacking", false);
+        anim.SetBool("Walking", false);   
     }
 }

@@ -13,6 +13,7 @@ public class ZombieSpawner : MonoBehaviour
     private int zombiesToSpawn = 0;
     private int zombiesRemaining = 0;
     private float healthIncrement = 20f;
+    private float baseSpawnInterval = 1.5f;
 
     private List<GameObject> zombiePool = new List<GameObject>();
     private int initialPoolSize = 50; 
@@ -46,10 +47,12 @@ public class ZombieSpawner : MonoBehaviour
 
     private IEnumerator SpawnZombies()
     {
+        float spawnInterval = Mathf.Max(0.5f, baseSpawnInterval - (round - 1) * 0.2f);
+
         for (int i = 0; i < zombiesToSpawn; i++)
         {
             SpawnZombie();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 
@@ -85,6 +88,14 @@ public class ZombieSpawner : MonoBehaviour
             Zombie zombieScript = zombie.GetComponent<Zombie>();
             zombieScript.Health = (100f + (round - 1) * healthIncrement);
             zombieScript.ResetZombie(); // Reiniciamos el estado del zombie
+            if (round >= 3 && Random.value <= 0.05f)
+            {
+                zombieScript.SetSpeed(6f);
+            }
+            else
+            {
+                zombieScript.SetSpeed(zombieScript.DefaultSpeed);
+            }
         }
     }
 
@@ -108,7 +119,6 @@ public class ZombieSpawner : MonoBehaviour
     public void DecreaseZombieCount()
     {
         zombiesRemaining--;
-        Debug.Log("Zombi muerto. Zombies restantes: " + zombiesRemaining);
 
         if (zombiesRemaining <= 0)
         {

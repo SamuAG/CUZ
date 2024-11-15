@@ -78,15 +78,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ThrowGrenade",
-                    "type": "Button",
-                    "id": "b8d63216-14dd-4262-b86b-6c3e51b4c2ec",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "5d58fb03-c858-42b5-96e1-7b347637acd3",
@@ -314,28 +305,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ChangeWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e85e74b8-b32a-4e8a-a571-4eb12358bcc2",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Teclado",
-                    "action": "ThrowGrenade",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b17897b3-5f24-4084-a352-e1966c493999",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ThrowGrenade",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

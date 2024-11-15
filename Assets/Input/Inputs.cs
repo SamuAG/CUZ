@@ -100,15 +100,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ThrowGrenade"",
-                    ""type"": ""Button"",
-                    ""id"": ""b8d63216-14dd-4262-b86b-6c3e51b4c2ec"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""5d58fb03-c858-42b5-96e1-7b347637acd3"",
@@ -341,28 +332,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e85e74b8-b32a-4e8a-a571-4eb12358bcc2"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Teclado"",
-                    ""action"": ""ThrowGrenade"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b17897b3-5f24-4084-a352-e1966c493999"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ThrowGrenade"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""62c92e3c-9cb2-485c-bfbb-6b833cb24565"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
@@ -449,7 +418,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
         m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
         m_Gameplay_ChangeWeapon = m_Gameplay.FindAction("ChangeWeapon", throwIfNotFound: true);
-        m_Gameplay_ThrowGrenade = m_Gameplay.FindAction("ThrowGrenade", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -523,7 +491,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Shoot;
     private readonly InputAction m_Gameplay_Reload;
     private readonly InputAction m_Gameplay_ChangeWeapon;
-    private readonly InputAction m_Gameplay_ThrowGrenade;
     private readonly InputAction m_Gameplay_Interact;
     public struct GameplayActions
     {
@@ -537,7 +504,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
         public InputAction @Reload => m_Wrapper.m_Gameplay_Reload;
         public InputAction @ChangeWeapon => m_Wrapper.m_Gameplay_ChangeWeapon;
-        public InputAction @ThrowGrenade => m_Wrapper.m_Gameplay_ThrowGrenade;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -572,9 +538,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @ChangeWeapon.started += instance.OnChangeWeapon;
             @ChangeWeapon.performed += instance.OnChangeWeapon;
             @ChangeWeapon.canceled += instance.OnChangeWeapon;
-            @ThrowGrenade.started += instance.OnThrowGrenade;
-            @ThrowGrenade.performed += instance.OnThrowGrenade;
-            @ThrowGrenade.canceled += instance.OnThrowGrenade;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -606,9 +569,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
             @ChangeWeapon.started -= instance.OnChangeWeapon;
             @ChangeWeapon.performed -= instance.OnChangeWeapon;
             @ChangeWeapon.canceled -= instance.OnChangeWeapon;
-            @ThrowGrenade.started -= instance.OnThrowGrenade;
-            @ThrowGrenade.performed -= instance.OnThrowGrenade;
-            @ThrowGrenade.canceled -= instance.OnThrowGrenade;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -703,7 +663,6 @@ public partial class @Inputs: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
-        void OnThrowGrenade(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }
     public interface IUIActions

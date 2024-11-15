@@ -47,13 +47,13 @@ public class WallInteractive : MonoBehaviour, IInteract
             if (!weaponHolder.IsAmmoFull(weaponName))
             {
                 // Si el arma no está completamente cargada, comprar munición
-                Debug.Log("Ya tienes esta arma, comprando munición...");
+                //Debug.Log("Ya tienes esta arma, comprando munición...");
                 weaponHolder.RefillAmmo(weaponName, true);
                 gM.AddPoints(-price);
             }
             else
             {
-                Debug.Log("Munición completa, no se puede comprar más.");
+                //Debug.Log("Munición completa, no se puede comprar más.");
             }
         }
         else if (weaponHolder.CurrentWeapons.Count == 2)
