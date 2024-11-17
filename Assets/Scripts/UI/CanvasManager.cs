@@ -51,7 +51,7 @@ public class CanvasManager : MonoBehaviour
     {
         InitializeSingleton();
 
-        gM.OnUpdateRounds += (value) => roundTxt.text = "" + value;
+        gM.OnUpdateRounds += (value) => roundTxt.text = "Round " + value;
         gM.OnUpdatePoints += (value) => pointsTxt.text = "" + value;
         gM.OnGameOver += HandleGameOver;
         gM.OnWinGame += HandleWinGame;

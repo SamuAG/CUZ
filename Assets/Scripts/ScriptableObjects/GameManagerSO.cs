@@ -33,7 +33,7 @@ public class GameManagerSO : ScriptableObject
     {
         //El game manager se suscribe al evento de la carga de una nueva escena
         SceneManager.sceneLoaded += SceneLoaded;
-        rounds = 0;
+        rounds = 1;
         points = 0;
     }
 
