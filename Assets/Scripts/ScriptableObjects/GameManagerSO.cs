@@ -33,6 +33,8 @@ public class GameManagerSO : ScriptableObject
     {
         //El game manager se suscribe al evento de la carga de una nueva escena
         SceneManager.sceneLoaded += SceneLoaded;
+        rounds = 0;
+        points = 0;
     }
 
     //Es en este metodo cuando buscamos al player u objetos que queramos tener traqueados
